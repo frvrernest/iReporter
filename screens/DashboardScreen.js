@@ -1,0 +1,1 @@
+// main screen after login, display recent records and status update
