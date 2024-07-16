@@ -64,12 +64,7 @@ const HomeScreen = () => {
         type="clear"
         titleStyle={styles.showMoreButton}
       />
-      <View style={styles.bottomNav}>
-        <Icon name="home" type="feather" color="#6200ea" />
-        <Icon name="file-document" type="material-community" color="#ccc" />
-        <Icon name="map" type="feather" color="#ccc" />
-        <Icon name="settings" type="feather" color="#ccc" />
-      </View>
+      
     </ScrollView>
   );
 };
