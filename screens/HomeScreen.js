@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { Avatar, Button, Icon } from 'react-native-elements';
+import React, { useContext, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Avatar, Button } from 'react-native-elements';
+import { ReportsContext } from '../components/ReportsContext';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+  const { reports } = useContext(ReportsContext);
   const [selectedIssue, setSelectedIssue] = useState('in progress');
+  const [latestReport, setLatestReport] = useState(null);
+
+  useEffect(() => {
+    if (reports.length > 0) {
+      setLatestReport(reports[reports.length - 1]);
+    }
+  }, [reports]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -11,60 +20,63 @@ const HomeScreen = () => {
         <Text style={styles.headerText}>Hello User!</Text>
         <Avatar
           rounded
-          source={{ }}
+          source={{ uri: 'https://www.example.com/path/to/avatar.jpg' }}
           size="medium"
         />
       </View>
-      <Text style={styles.subtitle}>Issue Title</Text>
-      <View style={styles.issueCard}>
-        <Text style={styles.issueTitle}>❄️</Text>
-        <Text style={styles.issueNumber}>Issue number: </Text>
-        <View style={styles.issueStatusContainer}>
-          <TouchableOpacity onPress={() => setSelectedIssue('pending')}>
-            <Text style={[styles.issueStatus, selectedIssue === 'pending' && styles.issueStatusSelected]}>
-              Pending
-            </Text>
-            <Text style={styles.issueTime}>08:21 AM</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setSelectedIssue('in progress')}>
-            <Text style={[styles.issueStatus, selectedIssue === 'in progress' && styles.issueStatusSelected]}>
-              In progress
-            </Text>
-            <Text style={styles.issueTime}>08:37 AM</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setSelectedIssue('completed')}>
-            <Text style={[styles.issueStatus, selectedIssue === 'completed' && styles.issueStatusSelected]}>
-              Completed
-            </Text>
-            <Text style={styles.issueTime}>09:00 AM</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      {latestReport ? (
+        <>
+          <Text style={styles.subtitle}>Issue Title</Text>
+          <View style={styles.issueCard}>
+            <Text style={styles.issueTitle}>{latestReport.issue}</Text>
+            <Text style={styles.issueNumber}>Issue number: {latestReport.id}</Text>
+            <View style={styles.issueStatusContainer}>
+              <TouchableOpacity onPress={() => setSelectedIssue('pending')}>
+                <Text style={[styles.issueStatus, selectedIssue === 'pending' && styles.issueStatusSelected]}>
+                  Pending
+                </Text>
+                <Text style={styles.issueTime}>{latestReport.time}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setSelectedIssue('in progress')}>
+                <Text style={[styles.issueStatus, selectedIssue === 'in progress' && styles.issueStatusSelected]}>
+                  In progress
+                </Text>
+                <Text style={styles.issueTime}>{latestReport.time}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setSelectedIssue('completed')}>
+                <Text style={[styles.issueStatus, selectedIssue === 'completed' && styles.issueStatusSelected]}>
+                  Completed
+                </Text>
+                <Text style={styles.issueTime}>{latestReport.time}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </>
+      ) : (
+        <Text style={styles.noReportsText}>No reports available</Text>
+      )}
       <Text style={styles.reportsTitle}>Reports from others</Text>
-      <View style={styles.reportList}>
-        {/* Repeat this View for each report item */}
-        <View style={styles.reportItem}>
-          <Text style={styles.reportTitle}> 🕳</Text>
-          <Text style={styles.reportLocation}> </Text>
-          <Text style={styles.reportDistance}>0.3km</Text>
-        </View>
-        <View style={styles.reportItem}>
-          <Text style={styles.reportTitle}>❄️</Text>
-          <Text style={styles.reportLocation}> </Text>
-          <Text style={styles.reportDistance}>0.6km</Text>
-        </View>
-        <View style={styles.reportItem}>
-          <Text style={styles.reportTitle}>⚠️</Text>
-          <Text style={styles.reportLocation}> </Text>
-          <Text style={styles.reportDistance}>1.5km</Text>
-        </View>
-      </View>
+      <FlatList
+        data={reports}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.reportItem}>
+            <Text style={styles.reportTitle}>{item.issue}</Text>
+            <Text style={styles.reportLocation}>{item.location}</Text>
+          </View>
+        )}
+      />
       <Button
         title="Show more"
         type="clear"
         titleStyle={styles.showMoreButton}
       />
-      
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => navigation.navigate('CreateReport')}
+      >
+        <Text style={styles.addButtonText}>Add New Report</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -125,6 +137,12 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textAlign: 'center',
   },
+  noReportsText: {
+    fontSize: 16,
+    color: '#999',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
   reportsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -153,12 +171,16 @@ const styles = StyleSheet.create({
   showMoreButton: {
     color: '#6200ea',
   },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
+  addButton: {
+    backgroundColor: '#6200ea',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
