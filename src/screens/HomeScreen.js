@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { colors } from "../utils/color";
 
@@ -13,6 +13,14 @@ const HomeScreen = () => {
         community working towards a brighter future. Download iReporter today
         and be the voice for change.
       </Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.buttonLeft}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonRight}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -32,10 +40,10 @@ const styles = StyleSheet.create({
     height: 230,
     resizeMode: "contain",
     marginVertical: 20,
-    marginTop: 0, 
+    marginTop: 0,
   },
   title: {
-    fontSize: 52, 
+    fontSize: 36,
     fontWeight: "bold",
     color: colors.primary,
     textAlign: "center",
@@ -50,5 +58,35 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: "bold",
     color: colors.secondary,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    marginTop: 30,
+    borderRadius: 50,
+    overflow: "hidden",
+  },
+  buttonLeft: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.black,
+    paddingVertical: 15,
+    borderTopLeftRadius: 50,
+    borderBottomLeftRadius: 50,
+  },
+  buttonRight: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.primary,
+    paddingVertical: 15,
+    borderTopRightRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+  buttonText: {
+    color: colors.white,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
