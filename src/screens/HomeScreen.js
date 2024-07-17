@@ -1,8 +1,17 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { colors } from "../utils/color";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
+  // Helps to navigate from one screen to the other
+  const navigation = useNavigation();
+
+  // Function for when the user clicks on the login
+  const handleLogin = () => {
+    navigation.navigate("Login");
+  };
+
   return (
     <View style={styles.container}>
       <Image source={require("../assets/LOGO.png")} style={styles.logo} />
@@ -14,9 +23,8 @@ const HomeScreen = () => {
         and be the voice for change.
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.buttonLeft}>
-          <Text style={styles.buttonText}
-          onPress={handleLogin}>Sign In</Text>
+        <TouchableOpacity style={styles.buttonLeft} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonRight}>
           <Text style={styles.buttonText}>Register</Text>
