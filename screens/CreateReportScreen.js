@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import { ReportsContext } from '../components/ReportsContext';
 
 const CreateReportScreen = ({ navigation }) => {
   const [issue, setIssue] = useState('');
@@ -8,6 +9,9 @@ const CreateReportScreen = ({ navigation }) => {
   const [reportsCount, setReportsCount] = useState(0);
   const [fixedCount, setFixedCount] = useState(0);
   const [updatesCount, setUpdatesCount] = useState(0);
+  const [id, setId] = useState('');
+  const [time, setTime] = useState('');
+  const { addReport } = useContext(ReportsContext);
 
   useEffect(() => {
     // Simulate fetching data or any async operations
@@ -24,9 +28,15 @@ const CreateReportScreen = ({ navigation }) => {
   }, []);
 
   const handleSubmit = () => {
-    // Handle submit logic
-    console.log('Issue:', issue);
-    console.log('Location:', location);
+    const newReport = {
+        id: Date.now().toString(),
+        issue,
+        location,
+    };
+    addReport(newReport);
+    navigation.navigate('Home');
+    // console.log('Issue:', issue);
+    // console.log('Location:', location);
   };
 
   return (
