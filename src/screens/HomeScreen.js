@@ -15,7 +15,8 @@ const HomeScreen = () => {
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.buttonLeft}>
-          <Text style={styles.buttonText}>Sign In</Text>
+          <Text style={styles.buttonText}
+          onPress={handleLogin}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonRight}>
           <Text style={styles.buttonText}>Register</Text>
