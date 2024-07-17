@@ -1,163 +1,153 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
-import MapView, { Marker } from 'react-native-maps';
+import * as Animatable from 'react-native-animatable';
 
-const CreateReportScreen = () => {
-  const [category, setCategory] = useState(null);
-  const [location, setLocation] = useState({
-    latitude: 49.981636,
-    longitude: 19.944382,
-  });
-  const [priority, setPriority] = useState('Low');
+const CreateReportScreen = ({ navigation }) => {
+  const [issue, setIssue] = useState('');
+  const [location, setLocation] = useState('');
+  const [reportsCount, setReportsCount] = useState(0);
+  const [fixedCount, setFixedCount] = useState(0);
+  const [updatesCount, setUpdatesCount] = useState(0);
 
-  const handleCategoryChange = (selectedCategory) => {
-    setCategory(selectedCategory);
-  };
+  useEffect(() => {
+    // Simulate fetching data or any async operations
+    
+    setTimeout(() => {
+      setReportsCount(19882);
+      setFixedCount(40434);
+      setUpdatesCount(9551007);
+    }, 1000); 
 
-  const handlePriorityChange = (selectedPriority) => {
-    setPriority(selectedPriority);
-  };
+    return () => {
+      // Cleanup function
+    };
+  }, []);
 
   const handleSubmit = () => {
-    // Handle submit logic here
-    console.log('Report submitted');
+    // Handle submit logic
+    console.log('Issue:', issue);
+    console.log('Location:', location);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Report an Issue</Text>
-      <View style={styles.imageContainer}>
-        {/* Replace with an actual image picker */}
-        <Text style={styles.imagePlaceholder}>Image Placeholder</Text>
-      </View>
-      <Text style={styles.label}>Issue category</Text>
-      <View style={styles.categoryContainer}>
-        <TouchableOpacity
-          style={[styles.categoryButton, category === 'Ice on the road' && styles.categoryButtonSelected]}
-          onPress={() => handleCategoryChange('Ice on the road')}
-        >
-          <Text style={styles.categoryButtonText}>Ice on the road</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.categoryButton, category === 'Hole in the road' && styles.categoryButtonSelected]}
-          onPress={() => handleCategoryChange('Hole in the road')}
-        >
-          <Text style={styles.categoryButtonText}>Hole in the road</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.categoryButton, category === 'Other' && styles.categoryButtonSelected]}
-          onPress={() => handleCategoryChange('Other')}
-        >
-          <Text style={styles.categoryButtonText}>Other</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.label}>Issue location</Text>
-      {/* // map placement */}
-      <TouchableOpacity onPress={() => console.log('Change location')}>
-        <Text style={styles.changeLocationText}>Change</Text>
+      <Text style={styles.title}>Report, view, or discuss local problems</Text>
+      <Text style={styles.subTitle}>like graffiti, fly tipping, broken paving slabs, or street lighting</Text>
+      
+      <Text style={styles.label}>Enter a nearby location</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="e.g. RidgeWays, Kiambu Rd"
+        value={location}
+        onChangeText={setLocation}
+      />
+      <TouchableOpacity style={styles.button} onPress={() => console.log('Use current location')}>
+        <Text style={styles.buttonText}>Use my current location</Text>
       </TouchableOpacity>
-      <Text style={styles.label}>Issue priority</Text>
-      <View style={styles.priorityContainer}>
-        <TouchableOpacity
-          style={[styles.priorityButton, priority === 'Low' && styles.priorityButtonSelected]}
-          onPress={() => handlePriorityChange('Low')}
-        >
-          <Text style={styles.priorityButtonText}>Low</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.priorityButton, priority === 'Medium' && styles.priorityButtonSelected]}
-          onPress={() => handlePriorityChange('Medium')}
-        >
-          <Text style={styles.priorityButtonText}>Medium</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.priorityButton, priority === 'High' && styles.priorityButtonSelected]}
-          onPress={() => handlePriorityChange('High')}
-        >
-          <Text style={styles.priorityButtonText}>High</Text>
-        </TouchableOpacity>
+
+      <Text style={styles.stepsTitle}>How to report a problem</Text>
+      <Text style={styles.steps}>1. Enter a nearby location</Text>
+      <Text style={styles.steps}>2. Locate the problem on a map of the area</Text>
+      <Text style={styles.steps}>3. Enter details of the problem</Text>
+      <Text style={styles.steps}>4. We send it to the council on your behalf</Text>
+
+      <View style={styles.statsContainer}>
+        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${reportsCount} reports in past week`}</Animatable.Text>
+        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${fixedCount} fixed in past month`}</Animatable.Text>
+        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${updatesCount} updates on reports`}</Animatable.Text>
       </View>
-      <Button title="Submit issue" onPress={handleSubmit} buttonStyle={styles.submitButton} />
+
+      <Text style={styles.label}>Describe the issue</Text>
+      <TextInput
+        style={styles.textarea}
+        placeholder="Describe the issue"
+        value={issue}
+        onChangeText={setIssue}
+        multiline
+      />
+
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <Text style={styles.submitButtonText}>Submit Issue</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     padding: 20,
+    backgroundColor: '#f8f8f8',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: '#333',
+    marginBottom: 10,
   },
-  imageContainer: {
-    height: 200,
-    backgroundColor: '#f0f0f0',
-    justifyContent: 'center',
-    alignItems: 'center',
+  subTitle: {
+    fontSize: 16,
+    color: '#666',
     marginBottom: 20,
-  },
-  imagePlaceholder: {
-    color: '#aaa',
   },
   label: {
     fontSize: 16,
+    color: '#333',
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+  stepsTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  categoryContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  steps: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  statsContainer: {
+    marginTop: 20,
     marginBottom: 20,
   },
-  categoryButton: {
-    flex: 1,
-    padding: 10,
-    borderWidth: 1,
+  stats: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 5,
+  },
+  textarea: {
+    height: 100,
     borderColor: '#ccc',
-    borderRadius: 5,
-    marginHorizontal: 5,
-    alignItems: 'center',
-  },
-  categoryButtonSelected: {
-    backgroundColor: '#ffeb3b',
-  },
-  categoryButtonText: {
-    fontSize: 14,
-  },
-  map: {
-    height: 200,
-    marginBottom: 10,
-  },
-  changeLocationText: {
-    color: '#1e90ff',
-    marginBottom: 20,
-  },
-  priorityContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  priorityButton: {
-    flex: 1,
-    padding: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
-    marginHorizontal: 5,
-    alignItems: 'center',
-  },
-  priorityButtonSelected: {
-    backgroundColor: '#ffeb3b',
-  },
-  priorityButtonText: {
-    fontSize: 14,
+    paddingHorizontal: 10,
+    textAlignVertical: 'top',
+    marginBottom: 20,
   },
   submitButton: {
     backgroundColor: '#6200ea',
+    padding: 15,
+    borderRadius: 5,
+  },
+  submitButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 16,
   },
 });
 
