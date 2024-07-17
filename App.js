@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import HomeScreen from './screens/HomeScreen';
 import CreateReportScreen from './screens/CreateReportScreen';
+import { ReportsProvider } from './components/ReportsContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,28 +29,31 @@ function HomeStack() {
 
 function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName;
-            if (route.name === 'Home') {
-              iconName = 'home';
-            } else if (route.name === 'CreateReport') {
-              iconName = 'file-plus';
-            }
-            return <Icon name={iconName} type="feather" color={color} size={size} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: '#6200ea',
-          inactiveTintColor: 'gray',
-        }}
-      >
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="CreateReport" component={CreateReportScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <ReportsProvider>
+        <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
+              if (route.name === 'Home') {
+                iconName = 'home';
+              } else if (route.name === 'CreateReport') {
+                iconName = 'file-plus';
+              }
+              return <Icon name={iconName} type="feather" color={color} size={size} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: '#6200ea',
+            inactiveTintColor: 'gray',
+          }}
+        >
+          <Tab.Screen name="Home" component={HomeStack} />
+          <Tab.Screen name="CreateReport" component={CreateReportScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </ReportsProvider>
+    
   );
 }
 
