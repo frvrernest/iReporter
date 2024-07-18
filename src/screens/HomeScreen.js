@@ -3,6 +3,7 @@ import React from "react";
 import { colors } from "../utils/color";
 import { useNavigation } from "@react-navigation/native";
 
+
 const HomeScreen = () => {
   // Helps to navigate from one screen to the other
   const navigation = useNavigation();
@@ -10,6 +11,11 @@ const HomeScreen = () => {
   // Function for when the user clicks on the login
   const handleLogin = () => {
     navigation.navigate("Login");
+  };
+
+  // Function for when the user clicks on the register
+  const handleSignup = () => {
+    navigation.navigate("SIGNUP");
   };
 
   return (
@@ -26,7 +32,7 @@ const HomeScreen = () => {
         <TouchableOpacity style={styles.buttonLeft} onPress={handleLogin}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonRight}>
+        <TouchableOpacity style={styles.buttonRight} onPress={handleSignup}>
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>

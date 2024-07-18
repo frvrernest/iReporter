@@ -13,15 +13,18 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = () => {
+const SignupScreen = () => {
   const navigation = useNavigation();
   const [secureEntry, setSecureEntry] = useState(true);
 
+  // Function to navigate back to the previous screen
   const handleGoBack = () => {
     navigation.goBack();
   };
-  const handleSignup = () => {
-    navigation.navigate("SIGNUP");
+
+  // Function to navigate to the Login screen
+  const handleLogin = () => {
+    navigation.navigate("Login");
   };
 
   return (
@@ -30,21 +33,38 @@ const LoginScreen = () => {
         <Ionicons
           name={"arrow-back-outline"}
           color={colors.primary}
-          size={25}
+          size={35}
         />
       </TouchableOpacity>
       <View style={styles.textContainer}>
-        <Text style={styles.headingText1}>Let's Sign you in</Text>
-        <Text style={styles.headingText2}>Welcome Back</Text>
-        <Text style={styles.headingText3}>You have been missed!!!</Text>
+        <Text style={styles.headingText1}>Let's Register</Text>
+        <Text style={styles.headingText2}>Account</Text>
+        <Text style={styles.subHeadingText}>Hello User, let's better Kenya</Text>
       </View>
 
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
+          <Ionicons name={"person-outline"} size={30} color={colors.secondary} />
+          <TextInput styles={styles.textInput} placeholder="Enter your name" />
+        </View>
+        <View style={styles.inputContainer}>
+          <SimpleLineIcons
+            name={"screen-smartphone"}
+            size={30}
+            color={colors.secondary}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter your phone no"
+            placeholderTextColor={colors.secondary}
+            keyboardType="phone-pad"
+          />
+        </View>
+        <View style={styles.inputContainer}>
           <Ionicons name={"mail-outline"} size={30} color={colors.secondary} />
           <TextInput
             style={styles.textInput}
-            placeholder="Email, phone & username"
+            placeholder="Enter your email"
             placeholderTextColor={colors.secondary}
             keyboardType="email-address"
           />
@@ -53,7 +73,7 @@ const LoginScreen = () => {
           <SimpleLineIcons name={"lock"} size={30} color={colors.secondary} />
           <TextInput
             style={styles.textInput}
-            placeholder="Password"
+            placeholder="Enter your password"
             placeholderTextColor={colors.secondary}
             secureTextEntry={secureEntry}
           />
@@ -65,11 +85,10 @@ const LoginScreen = () => {
             <SimpleLineIcons name={"eye"} size={20} color={colors.secondary} />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButtonWrapper}>
-          <Text style={styles.loginText}>Sign in</Text>
+       
+
+        <TouchableOpacity style={styles.signupButtonWrapper}>
+          <Text style={styles.signupText}>Sign up</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
         <TouchableOpacity style={styles.googleButtonContainer}>
@@ -80,9 +99,9 @@ const LoginScreen = () => {
           <Text style={styles.googleText}></Text>
         </TouchableOpacity>
         <View style={styles.footerContainer}>
-          <Text style={styles.accountText}>Don’t have an account?</Text>
-          <TouchableOpacity onPress={handleSignup}>
-            <Text style={styles.signupText}>Register Now</Text>
+          <Text style={styles.accountText}>Already have an account!</Text>
+          <TouchableOpacity onPress={handleLogin}>
+            <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -99,65 +118,58 @@ const styles = StyleSheet.create({
   backButtonWrapper: {
     height: 40,
     width: 40,
-    backgroundColor: colors.white,
-    borderRadius: 20,
     justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 20, 
   },
   textContainer: {
-    marginBottom: 50,
-   
+    // Added margin for better spacing very important
+    marginVertical: 5, 
+  
   },
   headingText1: {
-    fontSize: 43,
-    fontWeight: "bold",
+    fontSize: 42,
     color: colors.primary,
-    marginBottom: 10,
+    fontWeight: "bold", 
+
+    
   },
   headingText2: {
-    fontSize: 34,
+    fontSize: 42,
+    color: colors.primary,
     fontWeight: "bold",
-    color: colors.secondary,
-    marginBottom: 5,
+   
   },
-  headingText3: {
+  subHeadingText: {
     fontSize: 30,
     fontWeight: "bold",
     color: colors.secondary,
+    marginTop: 10, 
   },
   formContainer: {
-    marginTop: 20,
+    marginTop: 10, 
   },
   inputContainer: {
     borderWidth: 1,
     borderColor: colors.secondary,
-    borderRadius: 10,
-    paddingHorizontal: 20,
+    borderRadius: 10, 
+    paddingHorizontal: 15,
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 10,
-    height: 50,
-    marginBottom: 10,
-    padding: 2,
+    paddingVertical: 10, 
   },
   textInput: {
     flex: 1,
     paddingHorizontal: 10,
   },
-  forgotPasswordText: {
-    textAlign: "right",
-    color: colors.primary,
-    marginVertical: 10,
-  },
-  loginButtonWrapper: {
+  signupButtonWrapper: {
     backgroundColor: colors.primary,
     borderRadius: 10,
     marginTop: 20,
     paddingVertical: 15,
     alignItems: "center",
   },
-  loginText: {
+  signupText: {
     color: colors.white,
     fontSize: 18,
   },
@@ -171,12 +183,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: colors.primary,
-    borderRadius: 10,
+    borderRadius: 10, 
+    gap: 10,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
     marginVertical: 10,
-    height: 50,
   },
   googleImage: {
     height: 20,
@@ -196,10 +209,10 @@ const styles = StyleSheet.create({
   accountText: {
     color: colors.secondary,
   },
-  signupText: {
+  loginText: {
     color: colors.primary,
     marginLeft: 5,
   },
 });
 
-export default LoginScreen;
+export default SignupScreen;
