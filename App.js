@@ -6,10 +6,10 @@ import { Icon } from 'react-native-elements';
 import CreateReportScreen from './screens/CreateReportScreen';
 import EditRecordScreen from './screens/EditRecordScreen';
 import { ReportsProvider } from './components/ReportsContext';
-import PostedReportsScreenScreen from './screens/PostedReportsScreen';
+import PostedReportsScreen from './screens/PostedReportsScreen';  
 import HomeScreen from './screens/HomeScreen';
 import Login from './screens/LoginScreen';
-import SIGNUP from './screens/SignupScreen';
+import Signup from './screens/SignupScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,19 +19,18 @@ function HomeStack() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="SIGNUP" component={SIGNUP} />
+      <Stack.Screen name="Signup" component={Signup} />  
       <Stack.Screen 
-        name="ReportScreen" 
-        component={PostedReportsScreenScreen} 
-        options={{ headerShown: false }} 
+        name="PostedReports" 
+        component={PostedReportsScreen} 
+        options={{ headerShown: false }}  
       />
       <Stack.Screen 
         name="CreateReport" 
         component={CreateReportScreen} 
         options={{ title: 'Create Report' }} 
       />
-      <Stack.Screen name="EditRecordScreen" component={EditRecordScreen} />
-      
+      <Stack.Screen name="EditRecord" component={EditRecordScreen} />  
     </Stack.Navigator>
   );
 }
@@ -39,7 +38,7 @@ function HomeStack() {
 function App() {
   return (
     <ReportsProvider>
-        <NavigationContainer>
+      <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ color, size }) => {
@@ -62,12 +61,7 @@ function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </ReportsProvider>
-    
   );
 }
 
 export default App;
-
-
-
-
