@@ -1,0 +1,89 @@
+{
+    "reports": [
+      {
+        "id": 1,
+        "title": "Potholes on Moi Avenue",
+        "location": "Moi Avenue, Nairobi",
+        "status": "Under Investigation",
+        "date": "2024-07-12T10:00:00Z",
+        "lat": -1.28333,
+        "long": 36.8219,
+        "type": "Red-Flag",
+        "images": [],
+        "videos": []
+      },
+      {
+        "id": 2,
+        "title": "Flooded Area Near Nairobi River",
+        "location": "Nairobi River, Nairobi",
+        "status": "Resolved",
+        "date": "2024-07-10T14:30:00Z",
+        "lat": -1.286389,
+        "long": 36.817223,
+        "type": "Intervention",
+        "images": [],
+        "videos": []
+      },
+      {
+        "id": 3,
+        "title": "Illegal Dumping in Uhuru Park",
+        "location": "Uhuru Park, Nairobi",
+        "status": "Rejected",
+        "date": "2024-07-09T09:00:00Z",
+        "lat": -1.289556,
+        "long": 36.814917,
+        "type": "Red-Flag",
+        "images": [],
+        "videos": []
+      },
+      {
+        "id": 4,
+        "title": "Broken Street Lights",
+        "location": "Kenyatta Avenue, Nairobi",
+        "status": "Under Investigation",
+        "date": "2024-07-11T20:00:00Z",
+        "lat": -1.284167,
+        "long": 36.821389,
+        "type": "Intervention",
+        "images": [],
+        "videos": []
+      },
+      {
+        "id": 5,
+        "title": "Collapsed Bridge on Thika Road",
+        "location": "Thika Road, Nairobi",
+        "status": "Resolved",
+        "date": "2024-07-08T08:00:00Z",
+        "lat": -1.252222,
+        "long": 36.850833,
+        "type": "Intervention",
+        "images": [],
+        "videos": []
+      },
+      {
+        "id": 6,
+        "title": "Unauthorized Construction",
+        "location": "Karen, Nairobi",
+        "status": "Under Investigation",
+        "date": "2024-07-13T12:00:00Z",
+        "lat": -1.3225,
+        "long": 36.716667,
+        "type": "Red-Flag",
+        "images": [],
+        "videos": []
+      },
+      {
+        "id": 7,
+        "title": "Overflowing Garbage Bins",
+        "location": "Westlands, Nairobi",
+        "status": "Rejected",
+        "date": "2024-07-07T16:00:00Z",
+        "lat": -1.2683,
+        "long": 36.8045,
+        "type": "Intervention",
+        "images": [],
+        "videos": []
+      }
+    ]
+  }
+  
