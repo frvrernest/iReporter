@@ -5,14 +5,40 @@ import { ReportsContext } from '../components/ReportsContext';
 
 const PostedReportsScreenScreen = ({ navigation }) => {
   const { reports } = useContext(ReportsContext);
+  const [serverReports, setServerReports] = useState([]);
   const [selectedIssue, setSelectedIssue] = useState('in progress');
   const [latestReport, setLatestReport] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const response = await fetch('YOUR_API_ENDPOINT'); // Replace with your API endpoint
+        const data = await response.json();
+        setServerReports(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReports();
+  }, []);
 
   useEffect(() => {
     if (reports.length > 0) {
       setLatestReport(reports[reports.length - 1]);
     }
   }, [reports]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -57,7 +83,7 @@ const PostedReportsScreenScreen = ({ navigation }) => {
       )}
       <Text style={styles.reportsTitle}>Reports from others</Text>
       <FlatList
-        data={reports}
+        data={serverReports}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.reportItem}>
@@ -181,6 +207,11 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
