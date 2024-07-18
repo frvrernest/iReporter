@@ -32,6 +32,10 @@ const PostedReportsScreenScreen = ({ navigation }) => {
     }
   }, [reports]);
 
+  const handleEditReport = (reportId) => {
+    navigation.navigate('EditReport', { reportId });
+  }
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>

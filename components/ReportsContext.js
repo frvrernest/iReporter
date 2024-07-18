@@ -9,8 +9,14 @@ export const ReportsProvider = ({ children }) => {
     setReports((prevReports) => [...prevReports, report]);
   };
 
+  const updateReport = (updatedReport) => {
+    setReports(prevReports =>
+      prevReports.map(report => (report.id === updatedReport.id ? updatedReport : report))
+    );
+  };
+
   return (
-    <ReportsContext.Provider value={{ reports, addReport }}>
+    <ReportsContext.Provider value={{ reports, addReport, updateReport }}>
       {children}
     </ReportsContext.Provider>
   );

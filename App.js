@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import CreateReportScreen from './screens/CreateReportScreen';
+import EditRecordScreen from './screens/EditRecordScreen';
 import { ReportsProvider } from './components/ReportsContext';
 import PostedReportsScreenScreen from './screens/PostedReportsScreen';
 
@@ -24,6 +25,7 @@ function HomeStack() {
         component={CreateReportScreen} 
         options={{ title: 'Create Report' }} 
       />
+      <Stack.Screen name="EditRecordScreen" component={EditRecordScreen} />
       
     </Stack.Navigator>
   );
