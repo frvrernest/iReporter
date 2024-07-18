@@ -3,9 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import HomeScreen from './screens/HomeScreen';
 import CreateReportScreen from './screens/CreateReportScreen';
 import { ReportsProvider } from './components/ReportsContext';
+import PostedReportsScreenScreen from './screens/PostedReportsScreen';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -14,8 +15,8 @@ function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen 
-        name="Home" 
-        component={HomeScreen} 
+        name="ReportScreen" 
+        component={PostedReportsScreenScreen} 
         options={{ headerShown: false }} 
       />
       <Stack.Screen 
@@ -23,6 +24,7 @@ function HomeStack() {
         component={CreateReportScreen} 
         options={{ title: 'Create Report' }} 
       />
+      
     </Stack.Navigator>
   );
 }

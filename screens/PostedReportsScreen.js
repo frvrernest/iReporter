@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from '
 import { Avatar, Button } from 'react-native-elements';
 import { ReportsContext } from '../components/ReportsContext';
 
-const HomeScreen = ({ navigation }) => {
+const PostedReportsScreenScreen = ({ navigation }) => {
   const { reports } = useContext(ReportsContext);
   const [selectedIssue, setSelectedIssue] = useState('in progress');
   const [latestReport, setLatestReport] = useState(null);
@@ -184,4 +184,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default PostedReportsScreenScreen;
