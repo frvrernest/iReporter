@@ -7,7 +7,9 @@ import CreateReportScreen from './screens/CreateReportScreen';
 import EditRecordScreen from './screens/EditRecordScreen';
 import { ReportsProvider } from './components/ReportsContext';
 import PostedReportsScreenScreen from './screens/PostedReportsScreen';
-
+import HomeScreen from './screens/HomeScreen';
+import Login from './screens/LoginScreen';
+import SIGNUP from './screens/SignupScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -15,6 +17,9 @@ const Tab = createBottomTabNavigator();
 function HomeStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="SIGNUP" component={SIGNUP} />
       <Stack.Screen 
         name="ReportScreen" 
         component={PostedReportsScreenScreen} 
@@ -62,3 +67,7 @@ function App() {
 }
 
 export default App;
+
+
+
+
