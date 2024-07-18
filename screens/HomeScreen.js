@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { colors } from "../utils/color";
+import { colors } from "../utils/colors";
 import { useNavigation } from "@react-navigation/native";
-
 
 const HomeScreen = () => {
   // Helps to navigate from one screen to the other
@@ -18,9 +17,14 @@ const HomeScreen = () => {
     navigation.navigate("SIGNUP");
   };
 
+  // Function for when the user clicks to view posted reports
+  const handlePostedReports = () => {
+    navigation.navigate("PostedReports");
+  };
+
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/LOGO.png")} style={styles.logo} />
+      <Image source={require("../src/assets/LOGO.png")} style={styles.logo} />
       <Text style={styles.title}>Be the Change.</Text>
       <Text style={styles.title}>Report with iReporter.</Text>
       <Text style={styles.text}>
@@ -36,72 +40,71 @@ const HomeScreen = () => {
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.reportsButton} onPress={handlePostedReports}>
+        <Text style={styles.buttonText}>View Posted Reports</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default HomeScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#fff',
   },
   logo: {
-    width: 200,
-    height: 230,
-    resizeMode: "contain",
-    marginVertical: 20,
-    marginTop: 0,
+    width: 150,
+    height: 150,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: colors.primary,
-    textAlign: "center",
-    marginVertical: 10,
-    marginTop: 0,
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   text: {
-    fontSize: 18,
-    textAlign: "center",
-    paddingHorizontal: 20,
-    marginTop: 20,
-    lineHeight: 30,
-    fontWeight: "bold",
-    color: colors.secondary,
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
   },
   buttonContainer: {
-    flexDirection: "row",
-    marginTop: 30,
-    borderRadius: 50,
-    overflow: "hidden",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 20,
   },
   buttonLeft: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.black,
-    paddingVertical: 15,
-    borderTopLeftRadius: 50,
-    borderBottomLeftRadius: 50,
+    backgroundColor: colors.primary,
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginRight: 10,
   },
   buttonRight: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.primary,
-    paddingVertical: 15,
-    borderTopRightRadius: 50,
-    borderBottomRightRadius: 50,
+    backgroundColor: colors.secondary,
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginLeft: 10,
   },
   buttonText: {
-    color: colors.white,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+    color: '#fff',
+    fontSize: 16,
+  },
+  reportsButton: {
+    backgroundColor: colors.primary,
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 20,
   },
 });
+
+export default HomeScreen;
