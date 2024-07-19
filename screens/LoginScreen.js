@@ -21,7 +21,12 @@ const LoginScreen = () => {
     navigation.goBack();
   };
   const handleSignup = () => {
-    navigation.navigate("SIGNUP");
+    navigation.navigate("signUp");
+  };
+
+  // Function for when the user clicks to view posted reports
+  const handlePostedReports = () => {
+    navigation.navigate("PostedReports");
   };
 
   return (
@@ -68,7 +73,7 @@ const LoginScreen = () => {
         <TouchableOpacity>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButtonWrapper}>
+        <TouchableOpacity style={styles.loginButtonWrapper} onPress={handlePostedReports}>
           <Text style={styles.loginText}>Sign in</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>

@@ -17,10 +17,7 @@ const HomeScreen = () => {
     navigation.navigate("SIGNUP");
   };
 
-  // Function for when the user clicks to view posted reports
-  const handlePostedReports = () => {
-    navigation.navigate("PostedReports");
-  };
+  
 
   return (
     <View style={styles.container}>
@@ -40,9 +37,7 @@ const HomeScreen = () => {
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.reportsButton} onPress={handlePostedReports}>
-        <Text style={styles.buttonText}>View Posted Reports</Text>
-      </TouchableOpacity>
+      
     </View>
   );
 };
@@ -87,24 +82,18 @@ const styles = StyleSheet.create({
   },
   buttonRight: {
     flex: 1,
-    backgroundColor: colors.secondary,
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginLeft: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.primary,
+    paddingVertical: 15,
+    borderTopRightRadius: 50,
+    borderBottomRightRadius: 50,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
   },
-  reportsButton: {
-    backgroundColor: colors.primary,
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    width: '100%',
-    marginTop: 20,
-  },
+
 });
 
 export default HomeScreen;

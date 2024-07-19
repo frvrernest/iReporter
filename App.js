@@ -9,7 +9,7 @@ import { ReportsProvider } from './components/ReportsContext';
 import PostedReportsScreen from './screens/PostedReportsScreen';  
 import HomeScreen from './screens/HomeScreen';
 import Login from './screens/LoginScreen';
-import Signup from './screens/SignupScreen';
+import SIGNUP from './screens/SignupScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,7 +19,7 @@ function HomeStack() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />  
+      <Stack.Screen name="SIGNUP" component={SIGNUP} />  
       <Stack.Screen 
         name="PostedReports" 
         component={PostedReportsScreen} 
