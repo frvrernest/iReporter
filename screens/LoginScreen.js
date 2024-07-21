@@ -21,7 +21,7 @@ const LoginScreen = () => {
     navigation.goBack();
   };
   const handleSignup = () => {
-    navigation.navigate("signUp");
+    navigation.navigate("SIGNUP");
   };
 
   // Function for when the user clicks to view posted reports
@@ -32,11 +32,11 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
-        <Ionicons
+        {/* <Ionicons
           name={"arrow-back-outline"}
           color={colors.primary}
           size={25}
-        />
+        /> */}
       </TouchableOpacity>
       <View style={styles.textContainer}>
         <Text style={styles.headingText1}>Let's Sign you in</Text>
@@ -46,20 +46,20 @@ const LoginScreen = () => {
 
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
-          <Ionicons name={"mail-outline"} size={30} color={colors.secondary} />
+          <Ionicons name={"mail-outline"} size={30} />
           <TextInput
             style={styles.textInput}
             placeholder="Email, phone & username"
-            placeholderTextColor={colors.secondary}
+            placeholderTextColor={colors.primary}
             keyboardType="email-address"
           />
         </View>
         <View style={styles.inputContainer}>
-          <SimpleLineIcons name={"lock"} size={30} color={colors.secondary} />
+          <SimpleLineIcons name={"lock"} size={30} color={colors.primary} />
           <TextInput
             style={styles.textInput}
             placeholder="Password"
-            placeholderTextColor={colors.secondary}
+            placeholderTextColor={colors.primary}
             secureTextEntry={secureEntry}
           />
           <TouchableOpacity
@@ -67,7 +67,7 @@ const LoginScreen = () => {
               setSecureEntry((prev) => !prev);
             }}
           >
-            <SimpleLineIcons name={"eye"} size={20} color={colors.secondary} />
+            <SimpleLineIcons name={"eye"} size={20}  />
           </TouchableOpacity>
         </View>
         <TouchableOpacity>
@@ -99,7 +99,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 0,
+    
   },
   backButtonWrapper: {
     height: 40,
@@ -111,11 +113,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textContainer: {
-    marginBottom: 50,
+    marginBottom: 0,
+    marginTop: 10,
    
   },
   headingText1: {
     fontSize: 43,
+    marginTop: 0,
     fontWeight: "bold",
     color: colors.primary,
     marginBottom: 10,
@@ -133,10 +137,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     marginTop: 20,
+    flex: 1,
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: colors.secondary,
+    borderColor: colors.primary,
     borderRadius: 10,
     paddingHorizontal: 20,
     flexDirection: "row",
@@ -199,12 +204,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   accountText: {
-    color: colors.secondary,
+    color: colors.primary,
   },
   signupText: {
-    color: colors.primary,
+    color: colors.secondary,
     marginLeft: 5,
   },
 });
 
-export default LoginScreen;
+export default LoginScreen

@@ -5,6 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Dimensions,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../utils/colors";
@@ -12,6 +14,8 @@ import { colors } from "../utils/colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
+
+const { width, height } = Dimensions.get("window");
 
 const SignupScreen = () => {
   const navigation = useNavigation();
@@ -28,13 +32,9 @@ const SignupScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
-        <Ionicons
-          name={"arrow-back-outline"}
-          color={colors.primary}
-          size={35}
-        />
+        {/* <Ionicons name={"arrow-back-outline"} color={colors.secondary} size={35} /> */}
       </TouchableOpacity>
       <View style={styles.textContainer}>
         <Text style={styles.headingText1}>Let's Register</Text>
@@ -44,58 +44,48 @@ const SignupScreen = () => {
 
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
-          <Ionicons name={"person-outline"} size={30} color={colors.secondary} />
-          <TextInput styles={styles.textInput} placeholder="Enter your name" />
+          <Ionicons name={"person-outline"} size={30}  />
+          <TextInput styles={styles.textInput} 
+          placeholderTextColor={colors.primary}
+          placeholder="Enter your name" />
         </View>
         <View style={styles.inputContainer}>
-          <SimpleLineIcons
-            name={"screen-smartphone"}
-            size={30}
-            color={colors.secondary}
-          />
+          <SimpleLineIcons name={"screen-smartphone"} size={30}  />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your phone no"
-            placeholderTextColor={colors.secondary}
+            placeholderTextColor={colors.primary}
             keyboardType="phone-pad"
           />
         </View>
         <View style={styles.inputContainer}>
-          <Ionicons name={"mail-outline"} size={30} color={colors.secondary} />
+          <Ionicons name={"mail-outline"} size={30}  />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your email"
-            placeholderTextColor={colors.secondary}
+            placeholderTextColor={colors.primary}
             keyboardType="email-address"
           />
         </View>
         <View style={styles.inputContainer}>
-          <SimpleLineIcons name={"lock"} size={30} color={colors.secondary} />
+          <SimpleLineIcons name={"lock"} size={30}  />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your password"
-            placeholderTextColor={colors.secondary}
+            placeholderTextColor={colors.primary}
             secureTextEntry={secureEntry}
           />
-          <TouchableOpacity
-            onPress={() => {
-              setSecureEntry((prev) => !prev);
-            }}
-          >
-            <SimpleLineIcons name={"eye"} size={20} color={colors.secondary} />
+          <TouchableOpacity onPress={() => setSecureEntry((prev) => !prev)}>
+            <SimpleLineIcons name={"eye"} size={20} />
           </TouchableOpacity>
         </View>
-       
 
         <TouchableOpacity style={styles.signupButtonWrapper}>
           <Text style={styles.signupText}>Sign up</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
         <TouchableOpacity style={styles.googleButtonContainer}>
-          <Image
-            source={require("../utils/google.png")}
-            style={styles.googleImage}
-          />
+          <Image source={require("../utils/google.png")} style={styles.googleImage} />
           <Text style={styles.googleText}></Text>
         </TouchableOpacity>
         <View style={styles.footerContainer}>
@@ -105,113 +95,107 @@ const SignupScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: colors.white,
-    padding: 20,
+    padding: width * 0.05, // Adjust padding based on screen width
   },
   backButtonWrapper: {
     height: 40,
     width: 40,
     justifyContent: "center",
-    marginBottom: 20, 
+    marginBottom: 20,
   },
   textContainer: {
-    // Added margin for better spacing very important
-    marginVertical: 5, 
-  
+    marginVertical: height * 0.01, // Adjust margin based on screen height
   },
   headingText1: {
-    fontSize: 42,
-    color: colors.primary,
-    fontWeight: "bold", 
-
-    
+    fontSize: width * 0.1, // Responsive font size based on screen width
+    color: colors.secondary,
+    fontWeight: "bold",
   },
   headingText2: {
-    fontSize: 42,
-    color: colors.primary,
+    fontSize: width * 0.1, // Responsive font size based on screen width
+    color: colors.secondary,
     fontWeight: "bold",
-   
   },
   subHeadingText: {
-    fontSize: 30,
+    fontSize: width * 0.06, // Responsive font size based on screen width
     fontWeight: "bold",
-    color: colors.secondary,
-    marginTop: 10, 
+    color: colors.primary,
+    marginTop: height * 0.01, // Adjust margin based on screen height
   },
   formContainer: {
-    marginTop: 10, 
+    marginTop: height * 0.02, // Adjust margin based on screen height
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: colors.secondary,
-    borderRadius: 10, 
-    paddingHorizontal: 15,
+    borderColor: colors.primary,
+    borderRadius: 10,
+    paddingHorizontal: width * 0.03, // Adjust padding based on screen width
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
-    paddingVertical: 10, 
+    marginVertical: height * 0.01, // Adjust margin based on screen height
+    paddingVertical: height * 0.01, // Adjust padding based on screen height
   },
   textInput: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: width * 0.02, // Adjust padding based on screen width
   },
   signupButtonWrapper: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
     borderRadius: 10,
-    marginTop: 20,
-    paddingVertical: 15,
+    marginTop: height * 0.03, // Adjust margin based on screen height
+    paddingVertical: height * 0.02, // Adjust padding based on screen height
     alignItems: "center",
   },
   signupText: {
     color: colors.white,
-    fontSize: 18,
+    fontSize: width * 0.05, // Responsive font size based on screen width
   },
   continueText: {
     textAlign: "center",
-    marginVertical: 20,
-    fontSize: 14,
-    color: colors.secondary,
+    marginVertical: height * 0.02, // Adjust margin based on screen height
+    fontSize: width * 0.04, // Responsive font size based on screen width
+    color: colors.primary,
   },
   googleButtonContainer: {
     flexDirection: "row",
     borderWidth: 1,
     borderColor: colors.primary,
-    borderRadius: 10, 
-    gap: 10,
-    height: 50,
+    borderRadius: 10,
+    height: height * 0.06, // Adjust height based on screen height
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
-    marginVertical: 10,
+    padding: width * 0.02, // Adjust padding based on screen width
+    marginVertical: height * 0.01, // Adjust margin based on screen height
   },
   googleImage: {
-    height: 20,
-    width: 20,
-    marginRight: 10,
+    height: height * 0.03, // Adjust image size based on screen height
+    width: height * 0.03, // Adjust image size based on screen height
+    marginRight: width * 0.02, // Adjust margin based on screen width
   },
   googleText: {
-    fontSize: 16,
-    color: colors.primary,
+    fontSize: width * 0.04, // Responsive font size based on screen width
+    color: colors.secondary,
   },
   footerContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: height * 0.02, // Adjust margin based on screen height
   },
   accountText: {
-    color: colors.secondary,
+    color: colors.primary,
   },
   loginText: {
-    color: colors.primary,
-    marginLeft: 5,
+    color: colors.secondary,
+    marginLeft: width * 0.01, // Adjust margin based on screen width
   },
 });
 
