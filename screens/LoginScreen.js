@@ -12,6 +12,7 @@ import { colors } from "../utils/colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
+import { FONTS } from "../src/fonts/fonts";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -123,6 +124,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.primary,
     marginBottom: 10,
+    marginTop: -80,
+    fontFamily: FONTS.SemiBold
   },
   headingText2: {
     fontSize: 34,

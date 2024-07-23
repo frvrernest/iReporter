@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     marginVertical: height * 0.01, // Adjust margin based on screen height
   },
   headingText1: {
+    marginTop: -85,
     fontSize: width * 0.1, // Responsive font size based on screen width
     color: colors.secondary,
     fontWeight: "bold",
