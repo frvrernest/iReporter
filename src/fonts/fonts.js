@@ -1,4 +1,6 @@
-export const fonts = {
+export const FONTS = {
+  Black: 'Poppins-Black',
+
     Bold: 'Poppins-Bold',
     Light: 'Poppins-Light',
     Medium: 'Poppins-Medium',

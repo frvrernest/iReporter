@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing } from "reac
 import React, { useEffect, useRef } from "react";
 import { colors } from "../utils/colors";
 import { useNavigation } from "@react-navigation/native";
+import { FONTS } from "../src/fonts/fonts";
 
 const HomeScreen = () => {
   // Helps to navigate from one screen to the other
@@ -102,11 +103,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.secondary,
     marginBottom: 10,
+    fontFamily: FONTS.SemiBold,
   },
   text: {
     fontSize: 28,
     lineHeight: 34,
-    
+    fontFamily: FONTS.Medium,
     textAlign: 'center',
     color: '#333',
     marginBottom: 40,

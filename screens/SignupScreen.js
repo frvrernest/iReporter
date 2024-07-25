@@ -10,16 +10,34 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../utils/colors";
-
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const { width, height } = Dimensions.get("window");
 
 const SignupScreen = () => {
   const navigation = useNavigation();
   const [secureEntry, setSecureEntry] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const SIGNUP = async () => {
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user);
+      alert("Check your email for verification");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+      setLoading(false);
+    }
+  };
 
   // Function to navigate back to the previous screen
   const handleGoBack = () => {
@@ -44,13 +62,15 @@ const SignupScreen = () => {
 
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
-          <Ionicons name={"person-outline"} size={30}  />
-          <TextInput styles={styles.textInput} 
-          placeholderTextColor={colors.primary}
-          placeholder="Enter your name" />
+          <Ionicons name={"person-outline"} size={30} />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter your name"
+            placeholderTextColor={colors.primary}
+          />
         </View>
         <View style={styles.inputContainer}>
-          <SimpleLineIcons name={"screen-smartphone"} size={30}  />
+          <SimpleLineIcons name={"screen-smartphone"} size={30} />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your phone no"
@@ -59,29 +79,33 @@ const SignupScreen = () => {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Ionicons name={"mail-outline"} size={30}  />
+          <Ionicons name={"mail-outline"} size={30} />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your email"
             placeholderTextColor={colors.primary}
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View style={styles.inputContainer}>
-          <SimpleLineIcons name={"lock"} size={30}  />
+          <SimpleLineIcons name={"lock"} size={30} />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your password"
             placeholderTextColor={colors.primary}
             secureTextEntry={secureEntry}
+            value={password}
+            onChangeText={setPassword}
           />
           <TouchableOpacity onPress={() => setSecureEntry((prev) => !prev)}>
             <SimpleLineIcons name={"eye"} size={20} />
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.signupButtonWrapper}>
-          <Text style={styles.signupText}>Sign up</Text>
+        <TouchableOpacity style={styles.signupButtonWrapper} onPress={SIGNUP}>
+          <Text style={styles.signupText}>{loading ? "Signing up..." : "Sign up"}</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
         <TouchableOpacity style={styles.googleButtonContainer}>
@@ -115,6 +139,7 @@ const styles = StyleSheet.create({
     marginVertical: height * 0.01, // Adjust margin based on screen height
   },
   headingText1: {
+    marginTop: -85,
     fontSize: width * 0.1, // Responsive font size based on screen width
     color: colors.secondary,
     fontWeight: "bold",
