@@ -1,8 +1,9 @@
 import React from "react";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import { Avatar } from "react-native-elements";
 import { Icon } from "react-native-elements";
 import CreateReportScreen from "./screens/CreateReportScreen";
 import EditRecordScreen from "./screens/EditRecordScreen";
@@ -11,10 +12,12 @@ import PostedReportsScreen from "./screens/PostedReportsScreen";
 import HomeScreen from "./screens/HomeScreen";
 import Login from "./screens/LoginScreen";
 import SIGNUP from "./screens/SignupScreen";
+import ReportDetailsScreen from "./screens/ReportDetailsScreen";
 
 // Create stack and tab navigators
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
 
 // Function defining the Home stack navigator
 function HomeStack() {
@@ -43,6 +46,7 @@ function HomeStack() {
         options={{ title: "Create Report" }}
       />
       <Stack.Screen name="EditRecord" component={EditRecordScreen} />
+      <Stack.Screen name="ReportDetails" component={ReportDetailsScreen} />
     </Stack.Navigator>
   );
 }
@@ -59,10 +63,12 @@ function App() {
             // Configure tab bar icons based on the route name
             tabBarIcon: ({ color, size }) => {
               let iconName;
-              if (route.name === "Home") {
-                iconName = "home";
-              } else if (route.name === "CreateReport") {
-                iconName = "file-plus";
+              if (route.name === 'Home') {
+                iconName = 'home';
+              } else if (route.name === 'CreateReport') {
+                iconName = 'file-plus';
+              } else if (route.name === 'EditRecord') {
+                iconName = 'edit';
               }
               // Return the icon component from react-native-elements
               return (
@@ -92,6 +98,7 @@ function App() {
             options={{ headerShown: false }}
           />
           <Tab.Screen name="CreateReport" component={CreateReportScreen} />
+          <Tab.Screen name="EditRecord" component={EditRecordScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </ReportsProvider>
