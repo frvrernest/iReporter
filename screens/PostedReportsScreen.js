@@ -17,7 +17,7 @@ const PostedReportsScreen = ({ navigation }) => {
         setServerReports(data);
       } catch (error) {
         console.error('Error fetching reports:', error);
-        Alert.alert('Error', 'Failed to fetch reports');
+        // Alert.alert('Error', 'Failed to fetch reports');
       } finally {
         setLoading(false);
       }
@@ -86,7 +86,7 @@ const PostedReportsScreen = ({ navigation }) => {
           </View>
         )}
       />
-      <Button title="Show more" type="clear" titleStyle={styles.showMoreButton} />
+     
       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ReportDetails')}>
         <Text style={styles.addButtonText}>Past Reports</Text>
       </TouchableOpacity>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
   },
   header: {
     flexDirection: 'row',
@@ -107,10 +107,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerText: {
+    color: '#ffffff',
     fontSize: 24,
     fontWeight: 'bold',
   },
   subtitle: {
+    color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -182,14 +184,14 @@ const styles = StyleSheet.create({
     color: '#6200ea',
   },
   addButton: {
-    backgroundColor: '#6200ea',
+    backgroundColor: '#ffffff',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 20,
   },
   addButtonText: {
-    color: '#fff',
+    color: '#000000',
     fontSize: 16,
   },
   loadingContainer: {

@@ -86,7 +86,7 @@ const ReportDetailsScreen = ({ navigation }) => {
                         <Button
                             title="Edit"
                             onPress={() => handleEdit(item.id)}
-                            color="blue"
+                            color="white"
                         />
                         <Button
                             title="Delete"
@@ -104,14 +104,14 @@ const ReportDetailsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
-        backgroundColor: '#f0f2f5', // Light background for the container
+        padding: 20,
+        backgroundColor: '#000000', // Light background for the container
     },
     label: {
         fontSize: 18,
         fontWeight: '600',
         marginVertical: 12,
-        color: '#333', // Darker text for better readability
+        color: '#ffffff', // Darker text for better readability
     },
     input: {
         borderWidth: 1,
@@ -119,10 +119,10 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 12,
         marginBottom: 16,
-        backgroundColor: '#fff', // White background for inputs
+        backgroundColor: '#000000', // White background for inputs
     },
     reportItem: {
-        backgroundColor: '#fff',
+        backgroundColor: '#333',
         padding: 20,
         borderRadius: 12,
         marginBottom: 20,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         elevation: 3, // For Android shadow
     },
     reportTitle: {
-        color: '#1a1a1a',
+        color: '#ffffff',
         fontSize: 18,
         fontWeight: '700',
         marginBottom: 8,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        backgroundColor: '#ff4d4d', // Red background for delete
+        backgroundColor: '#000000', // Red background for delete
         borderRadius: 8,
         paddingHorizontal: 20,
     },
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
         padding: 15,
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
     hiddenButtonText: {
         color: '#fff',

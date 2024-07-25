@@ -114,15 +114,14 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#000000',
     flex: 1,
-    backgroundColor: colors.white,
     paddingHorizontal: 20,
     paddingTop: 0,
   },
   backButtonWrapper: {
     height: 40,
     width: 40,
-    backgroundColor: colors.white,
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 43,
     marginTop: 0,
     fontWeight: "bold",
-    color: colors.primary,
+    color: '#fff',
     marginBottom: 10,
     marginTop: -80,
     fontFamily: FONTS.SemiBold,
@@ -153,12 +152,15 @@ const styles = StyleSheet.create({
     color: colors.secondary,
   },
   formContainer: {
+    color: '#333', 
     marginTop: 20,
     flex: 1,
   },
   inputContainer: {
+    color: '#333', 
+    backgroundColor: '#D3D3D3', 
     borderWidth: 1,
-    borderColor: colors.primary,
+    borderColor: '#333',
     borderRadius: 10,
     paddingHorizontal: 20,
     flexDirection: "row",
@@ -169,16 +171,17 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   textInput: {
+   
     flex: 1,
     paddingHorizontal: 10,
   },
   forgotPasswordText: {
     textAlign: "right",
-    color: colors.primary,
+    color: '#fff',
     marginVertical: 10,
   },
   loginButtonWrapper: {
-    backgroundColor: colors.primary,
+    backgroundColor: '#333',
     borderRadius: 10,
     marginTop: 20,
     paddingVertical: 15,
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   accountText: {
-    color: colors.primary,
+    color: '#fff',
   },
   signupText: {
     color: colors.secondary,

@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f8f8f8', 
+    backgroundColor: '#000000', 
   },
   logo: {
     width: 200, 
@@ -133,13 +133,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   buttonLeft: {
-    backgroundColor: colors.primary,
+    backgroundColor: '#ffff',
   },
   buttonRight: {
     backgroundColor: colors.secondary,
   },
   buttonText: {
-    color: '#fff',
+    color: '#000000',
     fontSize: 18,
     fontWeight: '600',
   },

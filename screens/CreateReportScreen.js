@@ -38,7 +38,7 @@ const CreateReportScreen = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Report, view, or discuss local problems</Text>
-      <Text style={styles.subTitle}>like graffiti, fly tipping, broken paving slabs, or street lighting</Text>
+      <Text style={styles.subTitle}>"Like graffiti, fly tipping, broken paving slabs, or street lighting."</Text>
 
       <Text style={styles.label}>Enter a nearby location</Text>
       <TextInput
@@ -80,9 +80,9 @@ const CreateReportScreen = ({ navigation }) => {
       <Text style={styles.steps}>4. We send it to the council on your behalf</Text>
 
       <View style={styles.statsContainer}>
-        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${reportsCount} reports in past week`}</Animatable.Text>
-        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${fixedCount} fixed in past month`}</Animatable.Text>
-        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${updatesCount} updates on reports`}</Animatable.Text>
+        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${reportsCount} Reports in past week`}</Animatable.Text>
+        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${fixedCount} Fixed in past month`}</Animatable.Text>
+        <Animatable.Text animation="fadeInUp" style={styles.stats}>{`${updatesCount} Updates on reports`}</Animatable.Text>
       </View>
 
       <Text style={styles.label}>Describe the issue</Text>
@@ -104,34 +104,36 @@ const CreateReportScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#000000',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fffff',
     marginBottom: 10,
+    
   },
   subTitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#ffff',
     marginBottom: 20,
   },
   label: {
+    
     fontSize: 16,
-    color: '#333',
+    color: '#ffff',
     marginBottom: 10,
   },
   input: {
+    backgroundColor: '#333',
     height: 40,
-    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#333',
     padding: 10,
     borderRadius: 5,
     marginBottom: 20,
@@ -141,27 +143,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   dateButton: {
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     padding: 10,
     borderRadius: 5,
-    borderColor: '#ccc',
+    
     borderWidth: 1,
     marginBottom: 20,
   },
   dateButtonText: {
-    color: '#333',
+    color: '#fff',
     textAlign: 'center',
   },
   stepsTitle: {
+    color: '#ffff',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   steps: {
+    color: '#333',
+    backgroundColor: '#000000',
     fontSize: 16,
     marginBottom: 5,
   },
   statsContainer: {
+    color:  '#333' ,
     marginTop: 20,
     marginBottom: 20,
   },
@@ -172,7 +178,7 @@ const styles = StyleSheet.create({
   },
   textarea: {
     height: 100,
-    borderColor: '#ccc',
+    backgroundColor: '#333',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
@@ -180,12 +186,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   submitButton: {
-    backgroundColor: '#6200ea',
+    backgroundColor: '#ffff',
     padding: 15,
     borderRadius: 5,
   },
   submitButtonText: {
-    color: '#fff',
+    color: '#000000',
     textAlign: 'center',
     fontSize: 16,
   },
