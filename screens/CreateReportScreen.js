@@ -7,7 +7,7 @@ import { ReportsContext } from '../components/ReportsContext';
 const CreateReportScreen = ({ navigation }) => {
   const [issue, setIssue] = useState('');
   const [location, setLocation] = useState('');
-  const [date, setDate] = useState(new Date()); // Date picker state
+  const [date, setDate] = useState(new Date()); 
   const [reportsCount, setReportsCount] = useState(0);
   const [fixedCount, setFixedCount] = useState(0);
   const [updatesCount, setUpdatesCount] = useState(0);
@@ -28,11 +28,11 @@ const CreateReportScreen = ({ navigation }) => {
       id: Date.now().toString(),
       issue,
       location,
-      date: date.toLocaleDateString(), // Format date as string
+      date: date.toLocaleDateString(), 
     };
     addReport(newReport);
     Alert.alert('Success', 'Report submitted successfully');
-    navigation.navigate('Home');
+    navigation.navigate('PostedReports');
   };
 
   return (
