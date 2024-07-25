@@ -14,6 +14,7 @@ import Login from "./screens/LoginScreen";
 import SIGNUP from "./screens/SignupScreen";
 import ReportDetailsScreen from "./screens/ReportDetailsScreen";
 
+
 // Create stack and tab navigators
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -83,9 +84,12 @@ function App() {
           })}
           // Define tab bar appearance options
           tabBarOptions={{
+            
+              backgroundColor: '#333', // Dark background color
+            
             // Color of the active tab icon
             activeTintColor: "#6200ea",
-            inactiveTintColor: "gray",
+            inactiveTintColor: "black",
           }}
         >
           {/* 

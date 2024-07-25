@@ -126,7 +126,7 @@ const SignupScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: colors.white,
+    backgroundColor: '#000000',
     padding: width * 0.05, // Adjust padding based on screen width
   },
   backButtonWrapper: {
@@ -152,15 +152,16 @@ const styles = StyleSheet.create({
   subHeadingText: {
     fontSize: width * 0.06, // Responsive font size based on screen width
     fontWeight: "bold",
-    color: colors.primary,
+    color: '#fff',
     marginTop: height * 0.01, // Adjust margin based on screen height
   },
   formContainer: {
+    color: '#333', 
     marginTop: height * 0.02, // Adjust margin based on screen height
   },
   inputContainer: {
+    backgroundColor: '#D3D3D3',
     borderWidth: 1,
-    borderColor: colors.primary,
     borderRadius: 10,
     paddingHorizontal: width * 0.03, // Adjust padding based on screen width
     flexDirection: "row",
@@ -169,11 +170,12 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01, // Adjust padding based on screen height
   },
   textInput: {
+    color: '#000000',
     flex: 1,
     paddingHorizontal: width * 0.02, // Adjust padding based on screen width
   },
   signupButtonWrapper: {
-    backgroundColor: colors.secondary,
+    backgroundColor: '#333',
     borderRadius: 10,
     marginTop: height * 0.03, // Adjust margin based on screen height
     paddingVertical: height * 0.02, // Adjust padding based on screen height
@@ -187,12 +189,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: height * 0.02, // Adjust margin based on screen height
     fontSize: width * 0.04, // Responsive font size based on screen width
-    color: colors.primary,
+    color: '#fff',
   },
   googleButtonContainer: {
     flexDirection: "row",
     borderWidth: 1,
-    borderColor: colors.primary,
+    color: '#fff',
     borderRadius: 10,
     height: height * 0.06, // Adjust height based on screen height
     justifyContent: "center",
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
   },
   googleText: {
     fontSize: width * 0.04, // Responsive font size based on screen width
-    color: colors.secondary,
+    color: '#fff',
   },
   footerContainer: {
     flexDirection: "row",
@@ -216,10 +218,10 @@ const styles = StyleSheet.create({
     marginTop: height * 0.02, // Adjust margin based on screen height
   },
   accountText: {
-    color: colors.primary,
+    color: '#fff',
   },
   loginText: {
-    color: colors.secondary,
+    color: '#fff',
     marginLeft: width * 0.01, // Adjust margin based on screen width
   },
 });
