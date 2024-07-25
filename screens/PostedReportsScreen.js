@@ -1,13 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import { ReportsContext } from '../components/ReportsContext';
 
-const PostedReportsScreenScreen = ({ navigation }) => {
+const PostedReportsScreen = ({ navigation }) => {
   const { reports } = useContext(ReportsContext);
   const [serverReports, setServerReports] = useState([]);
   const [selectedIssue, setSelectedIssue] = useState('in progress');
-  const [latestReport, setLatestReport] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,7 +16,8 @@ const PostedReportsScreenScreen = ({ navigation }) => {
         const data = await response.json();
         setServerReports(data);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching reports:', error);
+        Alert.alert('Error', 'Failed to fetch reports');
       } finally {
         setLoading(false);
       }
@@ -26,16 +26,6 @@ const PostedReportsScreenScreen = ({ navigation }) => {
     fetchReports();
   }, []);
 
-  useEffect(() => {
-    if (reports.length > 0) {
-      setLatestReport(reports[reports.length - 1]);
-    }
-  }, [reports]);
-
-  const handleEditReport = (reportId) => {
-    navigation.navigate('EditReport', { reportId });
-  }
-
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -43,6 +33,9 @@ const PostedReportsScreenScreen = ({ navigation }) => {
       </View>
     );
   }
+
+  // Combine local reports with server reports
+  const combinedReports = [...reports, ...serverReports];
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -54,34 +47,30 @@ const PostedReportsScreenScreen = ({ navigation }) => {
           size="medium"
         />
       </View>
-      {latestReport ? (
-        <>
-          <Text style={styles.subtitle}>Issue Title</Text>
-          <View style={styles.issueCard}>
-            <Text style={styles.issueTitle}>{latestReport.issue}</Text>
-            <Text style={styles.issueNumber}>Issue number: {latestReport.id}</Text>
+      <Text style={styles.subtitle}>Your Reports</Text>
+      {reports.length > 0 ? (
+        reports.map((report) => (
+          <View key={report.id} style={styles.issueCard}>
+            <Text style={styles.issueTitle}>{report.issue}</Text>
+            <Text style={styles.issueNumber}>Issue number: {report.id}</Text>
             <View style={styles.issueStatusContainer}>
-              <TouchableOpacity onPress={() => setSelectedIssue('pending')}>
-                <Text style={[styles.issueStatus, selectedIssue === 'pending' && styles.issueStatusSelected]}>
-                  Pending
-                </Text>
-                <Text style={styles.issueTime}>{latestReport.time}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => setSelectedIssue('in progress')}>
-                <Text style={[styles.issueStatus, selectedIssue === 'in progress' && styles.issueStatusSelected]}>
-                  In progress
-                </Text>
-                <Text style={styles.issueTime}>{latestReport.time}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => setSelectedIssue('completed')}>
-                <Text style={[styles.issueStatus, selectedIssue === 'completed' && styles.issueStatusSelected]}>
-                  Completed
-                </Text>
-                <Text style={styles.issueTime}>{latestReport.time}</Text>
-              </TouchableOpacity>
+              {['pending', 'in progress', 'completed'].map(status => (
+                <TouchableOpacity
+                  key={status}
+                  onPress={() => setSelectedIssue(status)}
+                >
+                  <Text style={[
+                    styles.issueStatus,
+                    selectedIssue === status && styles.issueStatusSelected
+                  ]}>
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </Text>
+                  <Text style={styles.issueTime}>{report.date}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
-        </>
+        ))
       ) : (
         <Text style={styles.noReportsText}>No reports available</Text>
       )}
@@ -93,19 +82,13 @@ const PostedReportsScreenScreen = ({ navigation }) => {
           <View style={styles.reportItem}>
             <Text style={styles.reportTitle}>{item.issue}</Text>
             <Text style={styles.reportLocation}>{item.location}</Text>
+            <Text style={styles.reportDate}>{item.date}</Text>
           </View>
         )}
       />
-      <Button
-        title="Show more"
-        type="clear"
-        titleStyle={styles.showMoreButton}
-      />
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => navigation.navigate('CreateReport')}
-      >
-        <Text style={styles.addButtonText}>Add New Report</Text>
+      <Button title="Show more" type="clear" titleStyle={styles.showMoreButton} />
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ReportDetails')}>
+        <Text style={styles.addButtonText}>Past Reports</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -178,9 +161,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  reportList: {
-    marginBottom: 20,
-  },
   reportItem: {
     paddingVertical: 10,
     borderBottomWidth: 1,
@@ -194,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
   },
-  reportDistance: {
+  reportDate: {
     fontSize: 12,
     color: '#999',
   },
@@ -219,4 +199,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostedReportsScreenScreen;
+export default PostedReportsScreen;
