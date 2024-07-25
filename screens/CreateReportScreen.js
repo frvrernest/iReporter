@@ -1,49 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import DatePicker from 'react-native-date-picker';
 import { ReportsContext } from '../components/ReportsContext';
 
 const CreateReportScreen = ({ navigation }) => {
   const [issue, setIssue] = useState('');
   const [location, setLocation] = useState('');
+  const [date, setDate] = useState(new Date()); // Date picker state
   const [reportsCount, setReportsCount] = useState(0);
   const [fixedCount, setFixedCount] = useState(0);
   const [updatesCount, setUpdatesCount] = useState(0);
-  const [id, setId] = useState('');
-  const [time, setTime] = useState('');
   const { addReport } = useContext(ReportsContext);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   useEffect(() => {
     // Simulate fetching data or any async operations
-    
     setTimeout(() => {
       setReportsCount(19882);
       setFixedCount(40434);
       setUpdatesCount(9551007);
-    }, 1000); 
-
-    return () => {
-      // Cleanup function
-    };
+    }, 1000);
   }, []);
 
   const handleSubmit = () => {
     const newReport = {
-        id: Date.now().toString(),
-        issue,
-        location,
+      id: Date.now().toString(),
+      issue,
+      location,
+      date: date.toLocaleDateString(), // Format date as string
     };
     addReport(newReport);
+    Alert.alert('Success', 'Report submitted successfully');
     navigation.navigate('Home');
-    // console.log('Issue:', issue);
-    // console.log('Location:', location);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Report, view, or discuss local problems</Text>
       <Text style={styles.subTitle}>like graffiti, fly tipping, broken paving slabs, or street lighting</Text>
-      
+
       <Text style={styles.label}>Enter a nearby location</Text>
       <TextInput
         style={styles.input}
@@ -54,6 +50,28 @@ const CreateReportScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={() => console.log('Use current location')}>
         <Text style={styles.buttonText}>Use my current location</Text>
       </TouchableOpacity>
+
+      <Text style={styles.label}>Select the date of posting</Text>
+      <TouchableOpacity
+        style={styles.dateButton}
+        onPress={() => setShowDatePicker(true)}
+      >
+        <Text style={styles.dateButtonText}>{date.toLocaleDateString()}</Text>
+      </TouchableOpacity>
+
+      {showDatePicker && (
+        <DatePicker
+          modal
+          open={showDatePicker}
+          date={date}
+          mode="date"
+          onConfirm={(selectedDate) => {
+            setShowDatePicker(false);
+            setDate(selectedDate);
+          }}
+          onCancel={() => setShowDatePicker(false)}
+        />
+      )}
 
       <Text style={styles.stepsTitle}>How to report a problem</Text>
       <Text style={styles.steps}>1. Enter a nearby location</Text>
@@ -120,6 +138,18 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+    textAlign: 'center',
+  },
+  dateButton: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 5,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 20,
+  },
+  dateButtonText: {
+    color: '#333',
     textAlign: 'center',
   },
   stepsTitle: {
