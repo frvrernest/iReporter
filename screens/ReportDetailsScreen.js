@@ -55,7 +55,7 @@ const ReportDetailsScreen = ({ navigation }) => {
     };
 
     const handleEdit = (id) => {
-        navigation.navigate('EditReport', { reportId: id });
+        navigation.navigate('EditRecord', { reportId: id });
     };
 
     const handleDelete = async (id) => {
