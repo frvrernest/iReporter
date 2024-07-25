@@ -13,31 +13,43 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import { FONTS } from "../src/fonts/fonts";
+import { auth } from "../firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [secureEntry, setSecureEntry] = useState(true);
+
+  const Login = async () => {
+    setLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user);
+      // Navigate to the desired screen after successful login
+      navigation.navigate("PostedReports");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+      setLoading(false);
+    }
+  };
 
   const handleGoBack = () => {
     navigation.goBack();
   };
+
   const handleSignup = () => {
     navigation.navigate("SIGNUP");
-  };
-
-  // Function for when the user clicks to view posted reports
-  const handlePostedReports = () => {
-    navigation.navigate("PostedReports");
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
-        {/* <Ionicons
-          name={"arrow-back-outline"}
-          color={colors.primary}
-          size={25}
-        /> */}
+        {/* <Ionicons name={"arrow-back-outline"} color={colors.primary} size={25} /> */}
       </TouchableOpacity>
       <View style={styles.textContainer}>
         <Text style={styles.headingText1}>Let's Sign you in</Text>
@@ -53,6 +65,8 @@ const LoginScreen = () => {
             placeholder="Email, phone & username"
             placeholderTextColor={colors.primary}
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -62,20 +76,22 @@ const LoginScreen = () => {
             placeholder="Password"
             placeholderTextColor={colors.primary}
             secureTextEntry={secureEntry}
+            value={password}
+            onChangeText={setPassword}
           />
           <TouchableOpacity
             onPress={() => {
               setSecureEntry((prev) => !prev);
             }}
           >
-            <SimpleLineIcons name={"eye"} size={20}  />
+            <SimpleLineIcons name={"eye"} size={20} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButtonWrapper} onPress={handlePostedReports}>
-          <Text style={styles.loginText}>Sign in</Text>
+        <TouchableOpacity style={styles.loginButtonWrapper} onPress={Login}>
+          <Text style={styles.loginText}>{loading ? "Signing in..." : "Sign in"}</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
         <TouchableOpacity style={styles.googleButtonContainer}>
@@ -86,7 +102,7 @@ const LoginScreen = () => {
           <Text style={styles.googleText}></Text>
         </TouchableOpacity>
         <View style={styles.footerContainer}>
-          <Text style={styles.accountText}>Don’t have an account?</Text>
+          <Text style={styles.accountText}>Don't have an account?</Text>
           <TouchableOpacity onPress={handleSignup}>
             <Text style={styles.signupText}>Register Now</Text>
           </TouchableOpacity>
@@ -102,7 +118,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingHorizontal: 20,
     paddingTop: 0,
-    
   },
   backButtonWrapper: {
     height: 40,
@@ -116,7 +131,6 @@ const styles = StyleSheet.create({
   textContainer: {
     marginBottom: 0,
     marginTop: 10,
-   
   },
   headingText1: {
     fontSize: 43,
@@ -125,7 +139,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     marginBottom: 10,
     marginTop: -80,
-    fontFamily: FONTS.SemiBold
+    fontFamily: FONTS.SemiBold,
   },
   headingText2: {
     fontSize: 34,
@@ -215,4 +229,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen
+export default LoginScreen;
