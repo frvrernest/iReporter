@@ -16,28 +16,48 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+// Get device dimensions
 const { width, height } = Dimensions.get("window");
 
 const SignupScreen = () => {
-  const navigation = useNavigation();
-  const [secureEntry, setSecureEntry] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // Hook for navigation
+  const navigation = useNavigation(); 
 
-  const SIGNUP = async () => {
-    setLoading(true);
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(userCredential.user);
-      alert("Check your email for verification");
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      alert(error.message);
-      setLoading(false);
-    }
-  };
+  // State variables for managing input fields and loading state
+  const [secureEntry, setSecureEntry] = useState(true); 
+  const [loading, setLoading] = useState(false); 
+  const [name, setName] = useState(""); 
+  const [phone, setPhone] = useState(""); 
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+
+ 
+// Function to handle user signup
+const SIGNUP = async () => {
+ // Set loading state to true to indicate that the signup process has started¨
+ setLoading(true); 
+  try {
+    // Attempt to create a new user with the provided email and password
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // Log the user credentials to the console
+    console.log(userCredential.user); 
+    // Show an alert to the user to check their email for verification
+    alert("Check your email for verification"); 
+     // Clear the input fields
+     setName("");
+     setPhone("");
+     setEmail("");
+     setPassword("");  
+     // Set loading state to false as the signup process has completed
+    setLoading(false);
+  } catch (error) {
+    // If there is an error, log it to the console and show an alert to the user
+    console.log(error); 
+    alert(error.message);
+    setLoading(false); 
+  }
+};
+
 
   // Function to navigate back to the previous screen
   const handleGoBack = () => {
@@ -52,6 +72,7 @@ const SignupScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
+      
         {/* <Ionicons name={"arrow-back-outline"} color={colors.secondary} size={35} /> */}
       </TouchableOpacity>
       <View style={styles.textContainer}>
@@ -61,57 +82,71 @@ const SignupScreen = () => {
       </View>
 
       <View style={styles.formContainer}>
+        {/* Input field for Name */}
         <View style={styles.inputContainer}>
-          <Ionicons name={"person-outline"} size={30} />
+          <Ionicons name={"person-outline"} size={30} color={colors.primary} />
           <TextInput
             style={styles.textInput}
+            value={name}
+            onChangeText={setName}
             placeholder="Enter your name"
-            placeholderTextColor={colors.primary}
+            placeholderTextColor="#666"
           />
         </View>
+        {/* Input field for Phone Number */}
         <View style={styles.inputContainer}>
-          <SimpleLineIcons name={"screen-smartphone"} size={30} />
+          <SimpleLineIcons name={"screen-smartphone"} size={30} color={colors.primary} />
           <TextInput
             style={styles.textInput}
+            value={phone}
+            onChangeText={setPhone}
             placeholder="Enter your phone no"
-            placeholderTextColor={colors.primary}
+            placeholderTextColor="#666"
             keyboardType="phone-pad"
           />
         </View>
+        {/* Input field for Email */}
         <View style={styles.inputContainer}>
-          <Ionicons name={"mail-outline"} size={30} />
+          <Ionicons name={"mail-outline"} size={30} color={colors.primary} />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your email"
-            placeholderTextColor={colors.primary}
+            placeholderTextColor="#666"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
           />
         </View>
+        {/* Input field for Password */}
         <View style={styles.inputContainer}>
-          <SimpleLineIcons name={"lock"} size={30} />
+          <SimpleLineIcons name={"lock"} size={30} color={colors.primary} />
           <TextInput
             style={styles.textInput}
             placeholder="Enter your password"
-            placeholderTextColor={colors.primary}
+            placeholderTextColor="#666"
             secureTextEntry={secureEntry}
             value={password}
             onChangeText={setPassword}
           />
+          {/* Toggle password visibility */}
           <TouchableOpacity onPress={() => setSecureEntry((prev) => !prev)}>
-            <SimpleLineIcons name={"eye"} size={20} />
+            <SimpleLineIcons name={"eye"} size={20} color={colors.primary} />
           </TouchableOpacity>
         </View>
 
+        {/* Sign up button */}
         <TouchableOpacity style={styles.signupButtonWrapper} onPress={SIGNUP}>
           <Text style={styles.signupText}>{loading ? "Signing up..." : "Sign up"}</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
+        
+        {/* Google sign in button */}
         <TouchableOpacity style={styles.googleButtonContainer}>
           <Image source={require("../utils/google.png")} style={styles.googleImage} />
           <Text style={styles.googleText}></Text>
         </TouchableOpacity>
+
+        {/* Navigate to Login screen */}
         <View style={styles.footerContainer}>
           <Text style={styles.accountText}>Already have an account!</Text>
           <TouchableOpacity onPress={handleLogin}>
@@ -141,7 +176,7 @@ const styles = StyleSheet.create({
   headingText1: {
     marginTop: -85,
     fontSize: width * 0.1, // Responsive font size based on screen width
-    color: colors.secondary,
+    color:colors.secondary,
     fontWeight: "bold",
   },
   headingText2: {
@@ -152,16 +187,16 @@ const styles = StyleSheet.create({
   subHeadingText: {
     fontSize: width * 0.06, // Responsive font size based on screen width
     fontWeight: "bold",
-    color: '#fff',
+    color: '#FFFFFF',
     marginTop: height * 0.01, // Adjust margin based on screen height
   },
   formContainer: {
-    color: '#333', 
     marginTop: height * 0.02, // Adjust margin based on screen height
   },
   inputContainer: {
-    backgroundColor: '#D3D3D3',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
+    borderColor: '#666666',
     borderRadius: 10,
     paddingHorizontal: width * 0.03, // Adjust padding based on screen width
     flexDirection: "row",
@@ -175,26 +210,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.02, // Adjust padding based on screen width
   },
   signupButtonWrapper: {
-    backgroundColor: '#333',
+    backgroundColor: colors.secondary,
     borderRadius: 10,
     marginTop: height * 0.03, // Adjust margin based on screen height
     paddingVertical: height * 0.02, // Adjust padding based on screen height
     alignItems: "center",
   },
   signupText: {
-    color: colors.white,
+    color: '#FFFFFF',
     fontSize: width * 0.05, // Responsive font size based on screen width
   },
   continueText: {
     textAlign: "center",
     marginVertical: height * 0.02, // Adjust margin based on screen height
     fontSize: width * 0.04, // Responsive font size based on screen width
-    color: '#fff',
+    color: colors.white,
   },
   googleButtonContainer: {
     flexDirection: "row",
     borderWidth: 1,
-    color: '#fff',
+    borderColor: '#666666',
     borderRadius: 10,
     height: height * 0.06, // Adjust height based on screen height
     justifyContent: "center",
@@ -209,7 +244,7 @@ const styles = StyleSheet.create({
   },
   googleText: {
     fontSize: width * 0.04, // Responsive font size based on screen width
-    color: '#fff',
+    color: '#FFFFFF',
   },
   footerContainer: {
     flexDirection: "row",
@@ -218,7 +253,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.02, // Adjust margin based on screen height
   },
   accountText: {
-    color: '#fff',
+    color: '#FFFFFF',
   },
   loginText: {
     color: colors.secondary,
