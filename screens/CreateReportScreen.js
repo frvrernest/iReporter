@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import DatePicker from 'react-native-date-picker';
 import { ReportsContext } from '../components/ReportsContext';
 
