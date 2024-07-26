@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   loginText: {
-    color: '#fff',
+    color: colors.secondary,
     marginLeft: width * 0.01, // Adjust margin based on screen width
   },
 });

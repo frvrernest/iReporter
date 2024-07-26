@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing, Dimensions } from "react-native";
 import React, { useEffect, useRef } from "react";
 import { colors } from "../utils/colors";
 import { useNavigation } from "@react-navigation/native";
 import { FONTS } from "../src/fonts/fonts";
+
+const { width, height } = Dimensions.get('window'); // Get device dimensions
 
 const HomeScreen = () => {
   // Helps to navigate from one screen to the other
@@ -89,30 +91,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: width * 0.05, // Responsive padding
     backgroundColor: '#000000', 
   },
   logo: {
-    width: 200, 
-    height: 200, 
-    marginBottom: 30,
+    width: width * 0.5, // Responsive width
+    height: width * 0.5, // Responsive height
+    marginBottom: height * 0.05, // Responsive margin
   },
   title: {
-    fontSize: 38,
+    fontSize: width * 0.08, // Responsive font size
     fontWeight: 'bold',
     textAlign: 'center',
     color: colors.secondary,
-    marginBottom: 10,
+    marginBottom: height * 0.02, // Responsive margin
     fontFamily: FONTS.SemiBold,
   },
   text: {
-    fontSize: 28,
-    lineHeight: 34,
+    fontSize: width * 0.045, // Responsive font size
+    lineHeight: width * 0.06, // Responsive line height
     fontFamily: FONTS.Medium,
     textAlign: 'center',
-    color: '#333',
-    marginBottom: 40,
-    paddingHorizontal: 20,
+    color: '#ffffff', // Changed text color to white for better contrast
+    marginBottom: height * 0.05, // Responsive margin
+    paddingHorizontal: width * 0.05, // Responsive padding
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -121,11 +123,11 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingVertical: height * 0.02, // Responsive padding
+    paddingHorizontal: width * 0.05, // Responsive padding
     borderRadius: 30,
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: width * 0.02, // Responsive margin
     elevation: 3, 
     shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 },
@@ -140,7 +142,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#000000',
-    fontSize: 18,
+    fontSize: width * 0.045, // Responsive font size
     fontWeight: '600',
   },
 });
