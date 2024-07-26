@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../utils/colors";
-
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -17,31 +16,40 @@ import { auth } from "../firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = () => {
-  const navigation = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [secureEntry, setSecureEntry] = useState(true);
+  const navigation = useNavigation(); // Hook for navigation
 
+  // State variables for managing input fields, loading state, and password visibility
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); 
+  const [secureEntry, setSecureEntry] = useState(true); 
+
+  // Function to handle user login
   const Login = async () => {
-    setLoading(true);
+    // Set loading state to true to indicate that the login process has started
+    setLoading(true); 
     try {
+      // Attempt to sign in with the provided email and password
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // Log the user credentials to the console
       console.log(userCredential.user);
-      // Navigate to the desired screen after successful login
+      // Navigate to the "PostedReports" screen after successful login
       navigation.navigate("PostedReports");
       setLoading(false);
     } catch (error) {
+      // If there is an error, log it to the console and show an alert to the user
       console.log(error);
-      alert(error.message);
-      setLoading(false);
+      alert(error.message); 
+      setLoading(false); 
     }
   };
 
+  // Function to navigate back to the previous screen
   const handleGoBack = () => {
     navigation.goBack();
   };
 
+  // Function to navigate to the Signup screen
   const handleSignup = () => {
     navigation.navigate("SIGNUP");
   };
@@ -49,6 +57,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
+      
         {/* <Ionicons name={"arrow-back-outline"} color={colors.primary} size={25} /> */}
       </TouchableOpacity>
       <View style={styles.textContainer}>
@@ -58,6 +67,7 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.formContainer}>
+        {/* Input field for Email */}
         <View style={styles.inputContainer}>
           <Ionicons name={"mail-outline"} size={30} />
           <TextInput
@@ -69,6 +79,7 @@ const LoginScreen = () => {
             onChangeText={setEmail}
           />
         </View>
+        {/* Input field for Password */}
         <View style={styles.inputContainer}>
           <SimpleLineIcons name={"lock"} size={30} color={colors.primary} />
           <TextInput
@@ -79,6 +90,7 @@ const LoginScreen = () => {
             value={password}
             onChangeText={setPassword}
           />
+          {/* Toggle password visibility */}
           <TouchableOpacity
             onPress={() => {
               setSecureEntry((prev) => !prev);
@@ -90,10 +102,12 @@ const LoginScreen = () => {
         <TouchableOpacity>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
+        {/* Login button */}
         <TouchableOpacity style={styles.loginButtonWrapper} onPress={Login}>
           <Text style={styles.loginText}>{loading ? "Signing in..." : "Sign in"}</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
+        {/* Google sign in button */}
         <TouchableOpacity style={styles.googleButtonContainer}>
           <Image
             source={require("../utils/google.png")}
@@ -101,6 +115,7 @@ const LoginScreen = () => {
           />
           <Text style={styles.googleText}></Text>
         </TouchableOpacity>
+        {/* Navigate to Signup screen */}
         <View style={styles.footerContainer}>
           <Text style={styles.accountText}>Don't have an account?</Text>
           <TouchableOpacity onPress={handleSignup}>
@@ -114,7 +129,7 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#000000',
+    backgroundColor: '#5F6368', // Black background color
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 0,
@@ -171,7 +186,6 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   textInput: {
-   
     flex: 1,
     paddingHorizontal: 10,
   },

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
-import { Avatar, Button } from 'react-native-elements';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert, SafeAreaView } from 'react-native';
+import { Avatar } from 'react-native-elements';
 import { ReportsContext } from '../components/ReportsContext';
 
 const PostedReportsScreen = ({ navigation }) => {
@@ -17,7 +17,7 @@ const PostedReportsScreen = ({ navigation }) => {
         setServerReports(data);
       } catch (error) {
         console.error('Error fetching reports:', error);
-        // Alert.alert('Error', 'Failed to fetch reports');
+        Alert.alert('Error', 'Failed to fetch reports');
       } finally {
         setLoading(false);
       }
@@ -29,7 +29,7 @@ const PostedReportsScreen = ({ navigation }) => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <Text>Loading...</Text>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
@@ -38,76 +38,85 @@ const PostedReportsScreen = ({ navigation }) => {
   const combinedReports = [...reports, ...serverReports];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Hello User!</Text>
-        <Avatar
-          rounded
-          source={{ uri: 'https://www.example.com/path/to/avatar.jpg' }}
-          size="medium"
-        />
-      </View>
-      <Text style={styles.subtitle}>Your Reports</Text>
-      {reports.length > 0 ? (
-        reports.map((report) => (
-          <View key={report.id} style={styles.issueCard}>
-            <Text style={styles.issueTitle}>{report.issue}</Text>
-            <Text style={styles.issueNumber}>Issue number: {report.id}</Text>
-            <View style={styles.issueStatusContainer}>
-              {['pending', 'in progress', 'completed'].map(status => (
-                <TouchableOpacity
-                  key={status}
-                  onPress={() => setSelectedIssue(status)}
-                >
-                  <Text style={[
-                    styles.issueStatus,
-                    selectedIssue === status && styles.issueStatusSelected
-                  ]}>
-                    {status.charAt(0).toUpperCase() + status.slice(1)}
-                  </Text>
-                  <Text style={styles.issueTime}>{report.date}</Text>
-                </TouchableOpacity>
-              ))}
+    <SafeAreaView style={styles.safeContainer}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Hello User!</Text>
+          <Avatar
+          marginTop={40}
+            rounded
+            source={{ uri: 'https://www.example.com/path/to/avatar.jpg' }}
+            size="medium"
+          />
+        </View>
+        <Text style={styles.subtitle}>Your Reports</Text>
+        {reports.length > 0 ? (
+          reports.map((report) => (
+            <View key={report.id} style={styles.issueCard}>
+              <Text style={styles.issueTitle}>{report.issue}</Text>
+              <Text style={styles.issueNumber}>Issue number: {report.id}</Text>
+              <View style={styles.issueStatusContainer}>
+                {['pending', 'in progress', 'completed'].map(status => (
+                  <TouchableOpacity
+                    key={status}
+                    onPress={() => setSelectedIssue(status)}
+                  >
+                    <Text style={[
+                      styles.issueStatus,
+                      selectedIssue === status && styles.issueStatusSelected
+                    ]}>
+                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </Text>
+                    <Text style={styles.issueTime}>{report.date}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
-          </View>
-        ))
-      ) : (
-        <Text style={styles.noReportsText}>No reports available</Text>
-      )}
-      <Text style={styles.reportsTitle}>Reports from others</Text>
-      <FlatList
-        data={serverReports}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.reportItem}>
-            <Text style={styles.reportTitle}>{item.issue}</Text>
-            <Text style={styles.reportLocation}>{item.location}</Text>
-            <Text style={styles.reportDate}>{item.date}</Text>
-          </View>
+          ))
+        ) : (
+          <Text style={styles.noReportsText}>No reports available</Text>
         )}
-      />
-     
-      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ReportDetails')}>
-        <Text style={styles.addButtonText}>Past Reports</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <Text style={styles.reportsTitle}>Reports from others</Text>
+        <FlatList
+          data={serverReports}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.reportItem}>
+              <Text style={styles.reportTitle}>{item.issue}</Text>
+              <Text style={styles.reportLocation}>{item.location}</Text>
+              <Text style={styles.reportDate}>{item.date}</Text>
+            </View>
+          )}
+        />
+        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ReportDetails')}>
+          <Text style={styles.addButtonText}>Past Reports</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeContainer: {
+    flex: 1,
+    backgroundColor: '#000000', // Black background color
+  },
   container: {
     flexGrow: 1,
-    padding: 20,
-    backgroundColor: '#000000',
+    paddingHorizontal: 20,
+    paddingBottom: 40, 
+    backgroundColor: '#000000', 
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginVertical: 20,
   },
   headerText: {
     color: '#ffffff',
+    paddingRight: 10,
+    marginTop: 40,
     fontSize: 24,
     fontWeight: 'bold',
   },
@@ -162,6 +171,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#ffffff',
   },
   reportItem: {
     paddingVertical: 10,
@@ -171,6 +181,7 @@ const styles = StyleSheet.create({
   reportTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#ffffff',
   },
   reportLocation: {
     fontSize: 14,
@@ -179,9 +190,6 @@ const styles = StyleSheet.create({
   reportDate: {
     fontSize: 12,
     color: '#999',
-  },
-  showMoreButton: {
-    color: '#6200ea',
   },
   addButton: {
     backgroundColor: '#ffffff',
@@ -198,6 +206,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingText: {
+    color: '#ffffff',
+    fontSize: 18,
   },
 });
 
