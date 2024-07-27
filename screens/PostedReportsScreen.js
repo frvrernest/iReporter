@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,51 +8,72 @@ import {
   FlatList,
   Alert,
   SafeAreaView,
-  Modal
-} from 'react-native';
-import { Avatar } from 'react-native-elements';
-import { ReportsContext } from '../components/ReportsContext';
-import { useRoute } from '@react-navigation/native';
-import * as ImagePicker from 'expo-image-picker';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+  Modal,
+} from "react-native"; 
+import { Avatar } from "react-native-elements"; 
+import { ReportsContext } from "../components/ReportsContext"; 
+import { useRoute } from "@react-navigation/native"; 
+import * as ImagePicker from "expo-image-picker"; 
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const PostedReportsScreen = ({ navigation }) => {
+  // Destructure navigation from props
   const { reports } = useContext(ReportsContext);
-  const [serverReports, setServerReports] = useState([]);
-  const [selectedIssue, setSelectedIssue] = useState('in progress');
+  const [serverReports, setServerReports] = useState([]); 
+  const [selectedIssue, setSelectedIssue] = useState("in progress"); 
   const [loading, setLoading] = useState(true);
-  const [image, setImage] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [image, setImage] = useState(null); 
+  const [modalVisible, setModalVisible] = useState(false); 
 
   // Get the first name from the route parameters
   const route = useRoute();
-  const { firstName } = route.params;
+  // Destructure firstName from route parameters
+  const { firstName } = route.params; 
 
   useEffect(() => {
+    // Fetch reports from server
     const fetchReports = async () => {
       try {
-        const response = await fetch('YOUR_API_ENDPOINT'); // Replace with your API endpoint
+        const response = await fetch("YOUR_API_ENDPOINT"); // Replace with your API endpoint
         const data = await response.json();
         setServerReports(data);
       } catch (error) {
-        console.error('Error fetching reports:', error);
-        Alert.alert('Error', 'Failed to fetch reports');
+        console.error("Error fetching reports:", error);
+        Alert.alert("Error", "Failed to fetch reports");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchReports();
+    fetchReports(); // Call fetchReports
   }, []);
 
+
+  // function to request gallery permissions
+  const requestGalleryPermission = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permission Denied', "You've refused to allow this app to access your photos!");
+      return false;
+    }
+    return true;
+  };
+
+  // function to request camera permissions
+  const requestCameraPermission = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permission Denied', "You've refused to allow this app to access your camera!");
+      return false;
+    }
+    return true;
+  };
   // Function to pick an image from the gallery
   const pickImage = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const hasPermission = await requestGalleryPermission();
+    if (!hasPermission) return;
 
-    if (permissionResult.granted === false) {
-      alert("You've refused to allow this app to access your photos!");
-      return;
-    }
+   
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -61,7 +82,7 @@ const PostedReportsScreen = ({ navigation }) => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result.uri);
       hideModal();
     }
@@ -99,6 +120,7 @@ const PostedReportsScreen = ({ navigation }) => {
   };
 
   if (loading) {
+    // Render loading screen
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.loadingText}>Loading...</Text>
@@ -117,31 +139,41 @@ const PostedReportsScreen = ({ navigation }) => {
           <View style={styles.avatarContainer}>
             <Avatar
               rounded
-              source={image ? { uri: image } : { uri: 'https://www.example.com/path/to/avatar.jpg' }}
+              source={
+                image
+                  ? { uri: image }
+                  : { uri: "https://www.example.com/path/to/avatar.jpg" }
+              }
               size="medium"
               containerStyle={styles.avatar}
             />
-            <TouchableOpacity style={styles.cameraIconContainer} onPress={showModal}>
+            <TouchableOpacity
+              style={styles.cameraIconContainer}
+              onPress={showModal}
+            >
               <Ionicons name="camera-outline" size={20} color="#fff" />
             </TouchableOpacity>
           </View>
         </View>
         <Text style={styles.subtitle}>Your Reports</Text>
         {reports.length > 0 ? (
+          // Render local reports
           reports.map((report) => (
             <View key={report.id} style={styles.issueCard}>
               <Text style={styles.issueTitle}>{report.issue}</Text>
               <Text style={styles.issueNumber}>Issue number: {report.id}</Text>
               <View style={styles.issueStatusContainer}>
-                {['pending', 'in progress', 'completed'].map(status => (
+                {["pending", "in progress", "completed"].map((status) => (
                   <TouchableOpacity
                     key={status}
                     onPress={() => setSelectedIssue(status)}
                   >
-                    <Text style={[
-                      styles.issueStatus,
-                      selectedIssue === status && styles.issueStatusSelected
-                    ]}>
+                    <Text
+                      style={[
+                        styles.issueStatus,
+                        selectedIssue === status && styles.issueStatusSelected,
+                      ]}
+                    >
                       {status.charAt(0).toUpperCase() + status.slice(1)}
                     </Text>
                     <Text style={styles.issueTime}>{report.date}</Text>
@@ -165,7 +197,10 @@ const PostedReportsScreen = ({ navigation }) => {
             </View>
           )}
         />
-        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ReportDetails')}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("ReportDetails")}
+        >
           <Text style={styles.addButtonText}>Past Reports</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -198,70 +233,68 @@ const PostedReportsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: '#000000', // Black background color
+    backgroundColor: "#000000", // Black background color
   },
   container: {
     flexGrow: 1,
     paddingHorizontal: 20,
     paddingBottom: 40,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginVertical: 20,
   },
   headerText: {
-    color: '#ffffff',
+    color: "#ffffff",
     paddingRight: 10,
     marginTop: 40,
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   avatarContainer: {
-    position: 'relative',
+    position: "relative",
   },
   avatar: {
     marginTop: 40,
   },
   cameraIconContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: -5,
     right: -5,
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     borderRadius: 20,
     padding: 5,
   },
   subtitle: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   issueCard: {
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
   },
   issueTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   issueNumber: {
-    color: '#bbb',
+    color: "#bbb",
     fontSize: 12,
     marginBottom: 15,
   },
   issueStatusContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
- 
-
   issueStatus: {
     color: "#bbb",
     fontSize: 12,
@@ -324,6 +357,33 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     color: "#ffffff",
+    fontSize: 18,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  },
+  modalContent: {
+    width: 300,
+    backgroundColor: "#333",
+    padding: 20,
+    borderRadius: 10,
+  },
+  modalButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  modalButtonText: {
+    marginLeft: 10,
+    color: "#fff",
+    fontSize: 18,
+  },
+  modalCancelText: {
+    textAlign: "center",
+    color: "#ff0000",
     fontSize: 18,
   },
 });
