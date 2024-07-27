@@ -51,7 +51,7 @@ const SignupScreen = () => {
       // Save user data to Firestore
       await setDoc(doc(firestore, "users", user.uid), {
         firstName: firstName,
-        
+
         email: email,
         uid: user.uid,
       });
