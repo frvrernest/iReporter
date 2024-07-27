@@ -10,6 +10,7 @@ const DashboardScreen = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('date');
     const [filteredReports, setFilteredReports] = useState([]);
+    const [searchAttribute, setSearchAttribute] = useState('title');
 
     useEffect(() => {
         fetchReports();
@@ -22,7 +23,9 @@ const DashboardScreen = () => {
     const fetchReports = async () => {
         try{
             const response = await fetch('http://192.168.100.84:3000/reports');
+            console.log('Fetching reports..');
             if (!response.ok) {
+                console.log('Network response was not ok');
                 throw new Error('Network response was not ok');
               }
             const data = await response.json();
@@ -35,13 +38,18 @@ const DashboardScreen = () => {
 
     const filterReports = () => {
         const filtered = reports.filter(report =>
-          report.title.toLowerCase().includes(searchTerm.toLowerCase())
+          report[searchAttribute].toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredReports(filtered);
       };
 
       const handleSearch = () => {
         filterReports();
+      };
+
+      const handleClearSearch = () => {
+        setSearchTerm('');
+        setFilteredReports(reports);
       };
 
     const sortedReports = filteredReports.sort((a, b) => {
@@ -56,42 +64,42 @@ const DashboardScreen = () => {
 
     return(
         <View style={styles.container}>
-            <View style={styles.topNav}>
-                <Text style={styles.title}> Admin</Text>
-                
-            </View>
+            
 
             <View style={styles.searchContainer}>
             <TextInput
             style={styles.searchBar}
-            placeholder="Search reports..."
+            placeholder={`Search by ${searchAttribute}...`}
             value={searchTerm}
-            onChangeText={setSearchTerm}
+            onChangeText={text => setSearchTerm(text)}
             />
             <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.clearButton} onPress={handleClearSearch}>
             </TouchableOpacity>
 
             </View>
             
 
-            <Picker selectedValue={sortBy} onValueChange={setSortBy} style={styles.picker}>
+            <Picker selectedValue={searchAttribute} onValueChange={(itemValue) => setSearchAttribute(itemValue)} style={styles.picker}>
                 <Picker.Item label="Date" value="date" />
                 <Picker.Item label="Status" value="status" />
                 <Picker.Item label="Location" value="location" />
             </Picker>
+
+            <Text style={{fontSize: 20, margin: 15}}> Reports from others..</Text>
 
             <FlatList
                 data={sortedReports}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                 <TouchableOpacity
-                    style={styles.reportItem}
-                    onPress={() => navigation.navigate('ReportDetails', { report: item })}
+                style={styles.reportItem}                
+                onPress={() => navigation.navigate('ReportDetails', { report: item })}
                 >
                     <Text style={styles.reportTitle}>{item.title}</Text>
-                    <Text>{item.location}</Text>
                     <Text>Status: {item.status}</Text>
-                    <Text>{item.date}</Text>
+                    
 
                 </TouchableOpacity>
                 )}
@@ -106,18 +114,6 @@ const DashboardScreen = () => {
 const styles=StyleSheet.create({
     container:{
         flex:1
-    },
-    topNav: {
-        height: 60,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#6200ee',
-        paddingHorizontal: 20
-    },
-    title: {
-        color: '#fff',
-        fontSize: 20,
     },
     searchContainer: {
         flexDirection: 'row',
@@ -137,6 +133,12 @@ const styles=StyleSheet.create({
       searchButton: {
         backgroundColor: '#6200ee',
         padding: 10,
+        borderRadius: 4,
+      },
+      clearButton: {
+        backgroundColor: 'red',
+        padding: 10,
+        marginLeft: 10,
         borderRadius: 4,
       },
     picker: {
