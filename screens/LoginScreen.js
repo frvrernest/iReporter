@@ -1,19 +1,13 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
 import React, { useState } from "react";
-import { colors } from "../utils/colors";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import { FONTS } from "../src/fonts/fonts";
-import { auth } from "../firebase/firebaseConfig";
+import { auth, firestore } from "../firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { colors } from "../utils/colors";
+import { doc, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
   const navigation = useNavigation(); // Hook for navigation
@@ -31,16 +25,32 @@ const LoginScreen = () => {
     try {
       // Attempt to sign in with the provided email and password
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      // Log the user credentials to the console
-      console.log(userCredential.user);
-      // Navigate to the "PostedReports" screen after successful login
-      navigation.navigate("PostedReports");
+      const user = userCredential.user;
+
+      // Fetch the user's first name from Firestore
+      const userDoc = await getDoc(doc(firestore, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const firstName = userData.firstName;
+
+        // Navigate to the "PostedReports" screen with the user's first name
+        if (firstName) {
+           // If firstName exists, navigate to the "PostedReports" screen
+          navigation.navigate("PostedReports", { firstName });
+           // If firstName does not exist, navigate to the "UpdateProfile" screen
+        } else {
+          navigation.navigate("UpdateProfile");
+        }
+      } else {
+        navigation.navigate("UpdateProfile");
+      }
+
       setLoading(false);
+      // if the is error occurs, display an alert with the error message
     } catch (error) {
-      // If there is an error, log it to the console and show an alert to the user
       console.log(error);
-      alert(error.message); 
-      setLoading(false); 
+      alert(error.message);
+      setLoading(false);
     }
   };
 
@@ -57,7 +67,6 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
-      
         {/* <Ionicons name={"arrow-back-outline"} color={colors.primary} size={25} /> */}
       </TouchableOpacity>
       <View style={styles.textContainer}>
@@ -92,9 +101,7 @@ const LoginScreen = () => {
           />
           {/* Toggle password visibility */}
           <TouchableOpacity
-            onPress={() => {
-              setSecureEntry((prev) => !prev);
-            }}
+            onPress={() => setSecureEntry((prev) => !prev)}
           >
             <SimpleLineIcons name={"eye"} size={20} />
           </TouchableOpacity>

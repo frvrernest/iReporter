@@ -1,23 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert, SafeAreaView } from 'react-native';
-import { Avatar } from 'react-native-elements';
-import { ReportsContext } from '../components/ReportsContext';
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert, SafeAreaView } from "react-native";
+import { Avatar } from "react-native-elements";
+import { ReportsContext } from "../components/ReportsContext";
+import { useRoute } from "@react-navigation/native";
 
 const PostedReportsScreen = ({ navigation }) => {
   const { reports } = useContext(ReportsContext);
   const [serverReports, setServerReports] = useState([]);
-  const [selectedIssue, setSelectedIssue] = useState('in progress');
+  const [selectedIssue, setSelectedIssue] = useState("in progress");
   const [loading, setLoading] = useState(true);
+
+  // Get the first name from the route parameters
+  const route = useRoute();
+  const { firstName } = route.params;
 
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await fetch('YOUR_API_ENDPOINT'); // Replace with your API endpoint
+        const response = await fetch("YOUR_API_ENDPOINT"); // Replace with your API endpoint
         const data = await response.json();
         setServerReports(data);
       } catch (error) {
-        console.error('Error fetching reports:', error);
-        Alert.alert('Error', 'Failed to fetch reports');
+        console.error("Error fetching reports:", error);
+        Alert.alert("Error", "Failed to fetch reports");
       } finally {
         setLoading(false);
       }
@@ -41,11 +46,11 @@ const PostedReportsScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Hello User!</Text>
+          <Text style={styles.headerText}>Hello {firstName}!</Text>
           <Avatar
-          marginTop={40}
+            marginTop={40}
             rounded
-            source={{ uri: 'https://www.example.com/path/to/avatar.jpg' }}
+            source={{ uri: "https://www.example.com/path/to/avatar.jpg" }}
             size="medium"
           />
         </View>
@@ -56,15 +61,17 @@ const PostedReportsScreen = ({ navigation }) => {
               <Text style={styles.issueTitle}>{report.issue}</Text>
               <Text style={styles.issueNumber}>Issue number: {report.id}</Text>
               <View style={styles.issueStatusContainer}>
-                {['pending', 'in progress', 'completed'].map(status => (
+                {["pending", "in progress", "completed"].map((status) => (
                   <TouchableOpacity
                     key={status}
                     onPress={() => setSelectedIssue(status)}
                   >
-                    <Text style={[
-                      styles.issueStatus,
-                      selectedIssue === status && styles.issueStatusSelected
-                    ]}>
+                    <Text
+                      style={[
+                        styles.issueStatus,
+                        selectedIssue === status && styles.issueStatusSelected,
+                      ]}
+                    >
                       {status.charAt(0).toUpperCase() + status.slice(1)}
                     </Text>
                     <Text style={styles.issueTime}>{report.date}</Text>
@@ -88,7 +95,10 @@ const PostedReportsScreen = ({ navigation }) => {
             </View>
           )}
         />
-        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ReportDetails')}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("ReportDetails")}
+        >
           <Text style={styles.addButtonText}>Past Reports</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -99,116 +109,116 @@ const PostedReportsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: '#000000', // Black background color
+    backgroundColor: "#000000", // Black background color
   },
   container: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingBottom: 40, 
-    backgroundColor: '#000000', 
+    paddingBottom: 40,
+    backgroundColor: "#000000",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginVertical: 20,
   },
   headerText: {
-    color: '#ffffff',
+    color: "#ffffff",
     paddingRight: 10,
     marginTop: 40,
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   subtitle: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   issueCard: {
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
   },
   issueTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   issueNumber: {
-    color: '#bbb',
+    color: "#bbb",
     fontSize: 12,
     marginBottom: 15,
   },
   issueStatusContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   issueStatus: {
-    color: '#bbb',
+    color: "#bbb",
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: "center",
   },
   issueStatusSelected: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
   },
   issueTime: {
-    color: '#bbb',
+    color: "#bbb",
     fontSize: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
   noReportsText: {
     fontSize: 16,
-    color: '#999',
+    color: "#999",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   reportsTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
-    color: '#ffffff',
+    color: "#ffffff",
   },
   reportItem: {
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
   reportTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#ffffff',
+    fontWeight: "bold",
+    color: "#ffffff",
   },
   reportLocation: {
     fontSize: 14,
-    color: '#555',
+    color: "#555",
   },
   reportDate: {
     fontSize: 12,
-    color: '#999',
+    color: "#999",
   },
   addButton: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     padding: 15,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   addButtonText: {
-    color: '#000000',
+    color: "#000000",
     fontSize: 16,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   loadingText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 18,
   },
 });

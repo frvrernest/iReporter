@@ -26,7 +26,7 @@ const SignupScreen = () => {
   // State variables for managing input fields and loading state
   const [secureEntry, setSecureEntry] = useState(true); 
   const [loading, setLoading] = useState(false); 
-  const [name, setName] = useState(""); 
+  const [firstName, setFirstName] = useState(""); 
   const [phone, setPhone] = useState(""); 
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
@@ -39,12 +39,16 @@ const SIGNUP = async () => {
   try {
     // Attempt to create a new user with the provided email and password
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
     // Log the user credentials to the console
     console.log(userCredential.user); 
+
+
+    
     // Show an alert to the user to check their email for verification
     alert("Check your email for verification"); 
      // Clear the input fields
-     setName("");
+     setFirstName("");
      setPhone("");
      setEmail("");
      setPassword("");  
@@ -87,8 +91,8 @@ const SIGNUP = async () => {
           <Ionicons name={"person-outline"} size={30} color={colors.primary} />
           <TextInput
             style={styles.textInput}
-            value={name}
-            onChangeText={setName}
+            value={firstName}
+            onChangeText={setFirstName}
             placeholder="Enter your name"
             placeholderTextColor="#666"
           />
