@@ -86,7 +86,7 @@ const ReportDetailsScreen = ({ navigation }) => {
                         <Button
                             title="Edit"
                             onPress={() => handleEdit(item.id)}
-                            color="white"
+                            color="green"
                         />
                         <Button
                             title="Delete"
