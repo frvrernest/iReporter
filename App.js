@@ -14,7 +14,8 @@ import EditRecordScreen from "./screens/EditRecordScreen";
 import ReportDetailsScreen from "./screens/ReportDetailsScreen";
 import MapScreen from "./screens/MapScreen"; 
 import SettingsScreen from "./screens/SettingsScreen"; 
-import FloatingButton from "./components/FloatingButton"; 
+import FloatingButton from "./components/FloatingButton";
+import AdminDashboard from "./screens/AdminDashboard";
 
 // Create stack and tab navigators
 const Stack = createStackNavigator();
@@ -43,6 +44,8 @@ function HomeStack() {
       />
       <Stack.Screen name="ReportDetails" component={ReportDetailsScreen} />
       <Stack.Screen name="EditRecord" component={EditRecordScreen} />
+      <Stack.Screen name="Admin" component={AdminDashboard} />
+      
     </Stack.Navigator>
   );
 }
@@ -60,6 +63,12 @@ function MyReportsStack() {
         component={ReportDetailsScreen}
         options={{ title: "Report Details" }}
       />
+      <Stack.Screen
+        name="Admin"
+        component={AdminDashboard}
+        options={{ title: "AdminDashboard" }}
+      />
+
     </Stack.Navigator>
   );
 }
