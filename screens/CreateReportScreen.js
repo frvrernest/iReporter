@@ -16,9 +16,9 @@ const CreateReportScreen = ({ navigation }) => {
   useEffect(() => {
     // Simulate fetching data or any async operations
     setTimeout(() => {
-      setReportsCount(19882);
-      setFixedCount(40434);
-      setUpdatesCount(9551007);
+      setReportsCount(82);
+      setFixedCount(34);
+      setUpdatesCount(100);
     }, 1000);
   }, []);
 
@@ -39,10 +39,19 @@ const CreateReportScreen = ({ navigation }) => {
       <Text style={styles.title}>Report, view, or discuss local problems</Text>
       <Text style={styles.subTitle}>"Like graffiti, fly tipping, broken paving slabs, or street lighting."</Text>
 
-      <Text style={styles.label}>Enter a nearby location</Text>
+      <Text style={styles.label}>Issue Title</Text>
       <TextInput
         style={styles.input}
-        placeholder="e.g. RidgeWays, Kiambu Rd"
+        placeholder="Enter the issue title"
+        placeholderTextColor="#aaa"
+        value={issue}
+        onChangeText={setIssue}
+      />
+
+      <Text style={styles.label}>Location</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter the location"
         placeholderTextColor="#aaa"
         value={location}
         onChangeText={setLocation}
@@ -59,20 +68,21 @@ const CreateReportScreen = ({ navigation }) => {
         <Text style={styles.dateButtonText}>{date.toLocaleDateString()}</Text>
       </TouchableOpacity>
 
-
-      <DatePicker
-        modal
-        open={showDatePicker}
-        date={date}
-        mode="date"
-        onConfirm={(selectedDate) => {
-          setShowDatePicker(false);
-          setDate(selectedDate);
-        }}
-        onCancel={() => {
-          setShowDatePicker(false);
-        }}
-      />
+      {showDatePicker && (
+        <DatePicker
+          modal
+          open={showDatePicker}
+          date={date}
+          mode="date"
+          onConfirm={(selectedDate) => {
+            setShowDatePicker(false);
+            setDate(selectedDate);
+          }}
+          onCancel={() => {
+            setShowDatePicker(false);
+          }}
+        />
+      )}
 
       <Text style={styles.stepsTitle}>How to report a problem</Text>
       <Text style={styles.steps}>1. Enter a nearby location</Text>
@@ -95,6 +105,7 @@ const CreateReportScreen = ({ navigation }) => {
         onChangeText={setIssue}
         multiline
       />
+
 
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Submit Issue</Text>
@@ -156,7 +167,6 @@ const styles = StyleSheet.create({
   dateButtonText: {
     color: '#ffffff', 
     textAlign: 'center',
-    height: 20,
   },
   stepsTitle: {
     color: '#ffffff', 
@@ -167,9 +177,7 @@ const styles = StyleSheet.create({
   steps: {
     color: '#ffffff',
     fontSize: 16,
-    
     marginBottom: 5,
-
   },
   statsContainer: {
     marginTop: 20,
@@ -177,10 +185,8 @@ const styles = StyleSheet.create({
   },
   stats: {
     fontSize: 16,
-    
     fontWeight: 'bold',
-     // Green color for stats
-    color: '#00FF00',
+    color: '#00FF00', // Green color for stats
     marginBottom: 5,
   },
   textarea: {
