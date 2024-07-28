@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert, SafeAreaView, Dimensions } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { ReportsContext } from '../components/ReportsContext';
+import * as Animatable from 'react-native-animatable';
+
+const { width } = Dimensions.get('window');
 
 const PostedReportsScreen = ({ navigation }) => {
   const { reports } = useContext(ReportsContext);
   const [serverReports, setServerReports] = useState([]);
   const [selectedIssue, setSelectedIssue] = useState('in progress');
   const [loading, setLoading] = useState(true);
+ 
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -37,42 +41,67 @@ const PostedReportsScreen = ({ navigation }) => {
   // Combine local reports with server reports
   const combinedReports = [...reports, ...serverReports];
 
+  const handleScroll = (event) => {
+    const scrollX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(scrollX / (width * 0.8 + 20));
+    setActiveIndex(index);
+  };
+
+  const renderItem = ({ item }) => (
+    <Animatable.View
+      animation="slideInLeft"
+      delay={600} 
+      useNativeDriver
+      style={styles.issueCard}
+    >
+      <Text style={styles.issueTitle}>{item.issue}</Text>
+      <Text style={styles.issueNumber}>Issue number: {item.id}</Text>
+      <View style={styles.issueStatusContainer}>
+        {['pending', 'in progress', 'completed'].map(status => (
+          <TouchableOpacity
+            key={status}
+            onPress={() => setSelectedIssue(status)}
+          >
+            <Text style={[
+              styles.issueStatus,
+              selectedIssue === status && styles.issueStatusSelected
+            ]}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Text>
+            <Text style={styles.issueTime}>{item.date}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </Animatable.View>
+  );
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Hello User!</Text>
           <Avatar
-          marginTop={40}
+            marginTop={40}
             rounded
             source={{ uri: 'https://www.example.com/path/to/avatar.jpg' }}
             size="medium"
           />
         </View>
         <Text style={styles.subtitle}>Your Reports</Text>
-        {reports.length > 0 ? (
-          reports.map((report) => (
-            <View key={report.id} style={styles.issueCard}>
-              <Text style={styles.issueTitle}>{report.issue}</Text>
-              <Text style={styles.issueNumber}>Issue number: {report.id}</Text>
-              <View style={styles.issueStatusContainer}>
-                {['pending', 'in progress', 'completed'].map(status => (
-                  <TouchableOpacity
-                    key={status}
-                    onPress={() => setSelectedIssue(status)}
-                  >
-                    <Text style={[
-                      styles.issueStatus,
-                      selectedIssue === status && styles.issueStatusSelected
-                    ]}>
-                      {status.charAt(0).toUpperCase() + status.slice(1)}
-                    </Text>
-                    <Text style={styles.issueTime}>{report.date}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-          ))
+        {combinedReports.length > 0 ? (
+          <FlatList
+            data={combinedReports}
+            horizontal
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            showsHorizontalScrollIndicator={false}
+            snapToAlignment="center"
+            snapToInterval={width * 0.8 + 20} 
+            decelerationRate="fast"
+            contentContainerStyle={{ paddingHorizontal: 20 }}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+          />
         ) : (
           <Text style={styles.noReportsText}>No reports available</Text>
         )}
@@ -99,7 +128,7 @@ const PostedReportsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: '#000000', // Black background color
+    backgroundColor: '#000000', 
   },
   container: {
     flexGrow: 1,
@@ -130,7 +159,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     padding: 15,
     borderRadius: 10,
-    marginBottom: 20,
+    
+    width: width * 0.8, 
+    height: 150, 
+    marginHorizontal: 10,
   },
   issueTitle: {
     color: '#fff',
@@ -214,3 +246,4 @@ const styles = StyleSheet.create({
 });
 
 export default PostedReportsScreen;
+
