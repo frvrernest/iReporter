@@ -10,7 +10,8 @@
         "long": 36.8219,
         "type": "Red-Flag",
         "images": [],
-        "videos": []
+        "contact": "user1@gmail.com"
+  
       },
       {
         "id": 2,
@@ -22,8 +23,8 @@
         "long": 36.817223,
         "type": "Intervention",
         "images": [],
-        "videos": []
-      },
+        "contact": "user2@gmail.com"     
+       },
       {
         "id": 3,
         "title": "Illegal Dumping in Uhuru Park",
@@ -34,7 +35,7 @@
         "long": 36.814917,
         "type": "Red-Flag",
         "images": [],
-        "videos": []
+        "contact": "user3@gmail.com"
       },
       {
         "id": 4,
@@ -46,7 +47,7 @@
         "long": 36.821389,
         "type": "Intervention",
         "images": [],
-        "videos": []
+        "contact": "user4@gmail.com"
       },
       {
         "id": 5,
@@ -58,7 +59,7 @@
         "long": 36.850833,
         "type": "Intervention",
         "images": [],
-        "videos": []
+        "contact": "user5@gmail.com"
       },
       {
         "id": 6,
@@ -70,7 +71,7 @@
         "long": 36.716667,
         "type": "Red-Flag",
         "images": [],
-        "videos": []
+        "contact": "user6@gmail.com"
       },
       {
         "id": 7,
@@ -82,8 +83,149 @@
         "long": 36.8045,
         "type": "Intervention",
         "images": [],
-        "videos": []
-      }
-    ]
-  }
+        "contact": "user7@gmail.com"
+      },
+      {
+        "id": 8,
+        "title": "Corrupt Traffic Officer",
+        "location": "Nairobi",
+        "status": "under investigation",
+        "date": "2023-07-01T12:00:00Z",
+        "description": "A traffic officer was seen taking bribes at a checkpoint on Mombasa Road.",
+        "geolocation": {
+          "latitude": -1.28333,
+          "longitude": 36.81667
+        },
+        "images": [],
+        "contact":"user8@gmail.com"
+      },
+      
+    {
+      "id": 9,
+      "title": "Broken Water Pipe",
+      "location": "Mombasa",
+      "status": "resolved",
+      "date": "2023-06-15T08:30:00Z",
+      "description": "A major water pipe has been leaking for weeks, causing water wastage and road damage.",
+      "geolocation": {
+        "latitude": -4.04348,
+        "longitude": 39.66821
+      },
+      "images": [],
+      "contact":"user9@gmail.com"
+    },
+    {
+      "id": 10,
+      "title": "Illegal Dumping Site",
+      "location": "Kisumu",
+      "status": "under investigation",
+      "date": "2023-05-20T14:45:00Z",
+      "description": "An illegal dumping site has emerged near the residential area, causing health risks.",
+      "geolocation": {
+        "latitude": -0.0917,
+        "longitude": 34.7680
+      },
+      "images": [],
+      "contact":"user10@gmail.com"
+    },
+    {
+      "id": 11,
+      "title": "Bribery at Land Office",
+      "location": "Nakuru",
+      "status": "rejected",
+      "date": "2023-04-10T10:00:00Z",
+      "description": "Officials at the Nakuru Land Office are demanding bribes to process land titles.",
+      "geolocation": {
+        "latitude": -0.3031,
+        "longitude": 36.0800
+      },
+      "images": [],
+      "contact":"user11@gmail.com"
+    },
+    {
+      "id": 12,
+      "title": "Collapsed Bridge",
+      "location": "Eldoret",
+      "status": "resolved",
+      "date": "2023-03-05T16:20:00Z",
+      "description": "A bridge on the outskirts of Eldoret has collapsed, disrupting transportation.",
+      "geolocation": {
+        "latitude": 0.5143,
+        "longitude": 35.2698
+      },
+      "images": [],
+      "contact":"user12@gmail.com"
+    },
+    {
+      "id": 13,
+      "title": "Flooded Road",
+      "location": "Thika",
+      "status": "under investigation",
+      "date": "2023-07-15T09:10:00Z",
+      "description": "Heavy rains have caused severe flooding on Garissa Road, making it impassable.",
+      "geolocation": {
+        "latitude": -1.0333,
+        "longitude": 37.0693
+      },
+      "images": [],
+      "contact": "user13@gmail.com"
+    },
+    {
+      "id": 14,
+      "title": "Electricity Outage",
+      "location": "Nyeri",
+      "status": "resolved",
+      "date": "2023-06-20T18:50:00Z",
+      "description": "A prolonged electricity outage in Nyeri town is affecting businesses and residents.",
+      "geolocation": {
+        "latitude": -0.4167,
+        "longitude": 36.9500
+      },
+      "images": [],
+      "contact": "user14@gmail.com"
+    },
+    {
+      "id": 15,
+      "title": "Unfinished Road Construction",
+      "location": "Machakos",
+      "status": "under investigation",
+      "date": "2023-05-10T11:30:00Z",
+      "description": "Road construction on Mombasa Road has been left unfinished, causing traffic jams.",
+      "geolocation": {
+        "latitude": -1.5167,
+        "longitude": 37.2667
+      },
+      "images": [],
+      "contact":"user15@gmail.com"
+    },
+    {
+      "id": 16,
+      "title": "Polluted River",
+      "location": "Embu",
+      "status": "resolved",
+      "date": "2023-04-25T13:00:00Z",
+      "description": "The river in Embu town is heavily polluted, posing a health risk to residents.",
+      "geolocation": {
+        "latitude": -0.5333,
+        "longitude": 37.4500
+      },
+      "images": [],
+      "contact":"user16@gmail.com"
+    },
+    {
+      "id": 17,
+      "title": "Uncollected Garbage",
+      "location": "Nanyuki",
+      "status": "under investigation",
+      "date": "2023-03-30T07:40:00Z",
+      "description": "Garbage collection in Nanyuki has been neglected for weeks, causing sanitation issues.",
+      "geolocation": {
+        "latitude": 0.0167,
+        "longitude": 37.0667
+      },
+      "images": [],
+      "contact": "user17@gmail.com"
+    }
+
+]
   
