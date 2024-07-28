@@ -27,17 +27,16 @@ const LoginScreen = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Fetch the user's first name from Firestore
+      // Fetch the user's first name and profile image from Firestore
       const userDoc = await getDoc(doc(firestore, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
         const firstName = userData.firstName;
+        const profileImage = userData.profileImage;
 
-        // Navigate to the "PostedReports" screen with the user's first name
+        // Navigate to the "PostedReports" screen with the user's first name and profile image
         if (firstName) {
-           // If firstName exists, navigate to the "PostedReports" screen
-          navigation.navigate("PostedReports", { firstName });
-           // If firstName does not exist, navigate to the "UpdateProfile" screen
+          navigation.navigate("PostedReports", { firstName, profileImage });
         } else {
           navigation.navigate("UpdateProfile");
         }
@@ -46,7 +45,7 @@ const LoginScreen = () => {
       }
 
       setLoading(false);
-      // if the is error occurs, display an alert with the error message
+      // if there is an error display an alert with the error message
     } catch (error) {
       console.log(error);
       alert(error.message);
