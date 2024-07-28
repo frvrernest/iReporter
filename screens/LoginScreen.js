@@ -34,14 +34,14 @@ const LoginScreen = () => {
         const firstName = userData.firstName;
         const profileImage = userData.profileImage;
 
-        // Navigate to the "PostedReports" screen with the user's first name and profile image
+        // Navigate to the "PostedReports" screen with the user's first name, profile image, and userId
         if (firstName) {
-          navigation.navigate("PostedReports", { firstName, profileImage });
+          navigation.navigate("PostedReports", { firstName, profileImage, userId: user.uid });
         } else {
-          navigation.navigate("UpdateProfile");
+          navigation.navigate("UpdateProfile", { userId: user.uid });
         }
       } else {
-        navigation.navigate("UpdateProfile");
+        navigation.navigate("UpdateProfile", { userId: user.uid });
       }
 
       setLoading(false);

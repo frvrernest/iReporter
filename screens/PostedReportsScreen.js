@@ -10,11 +10,11 @@ import {
   SafeAreaView,
   Modal,
   Linking,
-} from "react-native"; 
-import { Avatar } from "react-native-elements"; 
-import { ReportsContext } from "../components/ReportsContext"; 
-import { useRoute } from "@react-navigation/native"; 
-import * as ImagePicker from "expo-image-picker"; 
+} from "react-native";
+import { Avatar } from "react-native-elements";
+import { ReportsContext } from "../components/ReportsContext";
+import { useRoute } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "../firebase/firebaseConfig";
@@ -22,16 +22,21 @@ import { firestore } from "../firebase/firebaseConfig";
 const PostedReportsScreen = ({ navigation }) => {
   // Destructure navigation from props
   const { reports } = useContext(ReportsContext);
-  const [serverReports, setServerReports] = useState([]); 
-  const [selectedIssue, setSelectedIssue] = useState("in progress"); 
+  const [serverReports, setServerReports] = useState([]);
+  const [selectedIssue, setSelectedIssue] = useState("in progress");
   const [loading, setLoading] = useState(true);
-  const [image, setImage] = useState(null); 
-  const [modalVisible, setModalVisible] = useState(false); 
+  const [image, setImage] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   // Get the first name from the route parameters
   const route = useRoute();
-  // Destructure firstName from route parameters
-  const { firstName } = route.params; 
+  // Destructure firstName, profileImage, and userId from route parameters
+  const { firstName, profileImage, userId } = route.params;
+
+  // Set initial profile image from route parameters
+  useEffect(() => {
+    setImage(profileImage);
+  }, [profileImage]);
 
   useEffect(() => {
     // Fetch reports from server
@@ -50,34 +55,40 @@ const PostedReportsScreen = ({ navigation }) => {
 
     fetchReports(); // Call fetchReports
   }, []);
- // Check permissions on screen load
- useEffect(() => {
-  checkPermissions();
-}, []);
-const checkPermissions = async () => {
-  const cameraPermission = await ImagePicker.getCameraPermissionsAsync();
-  const galleryPermission = await ImagePicker.getMediaLibraryPermissionsAsync();
+  
+  // Check permissions on screen load
+  useEffect(() => {
+    checkPermissions();
+  }, []);
+  
+  // Check camera and gallery permissions
+  const checkPermissions = async () => {
+    const cameraPermission = await ImagePicker.getCameraPermissionsAsync();
+    const galleryPermission = await ImagePicker.getMediaLibraryPermissionsAsync();
 
-  if (cameraPermission.status !== 'granted' || galleryPermission.status !== 'granted') {
-    Alert.alert(
-      'Permissions Required',
-      'This app needs camera and photo library permissions to update your profile picture.',
-      [
-        { text: 'Open Settings', onPress: () => Linking.openSettings() },
-        { text: 'Cancel', style: 'cancel' },
-      ]
-    );
-  }
-};
+    if (
+      cameraPermission.status !== "granted" ||
+      galleryPermission.status !== "granted"
+    ) {
+      Alert.alert(
+        "Permissions Required",
+        "This app needs camera and photo library permissions to update your profile picture.",
+        [
+          { text: "Open Settings", onPress: () => Linking.openSettings() },
+          { text: "Cancel", style: "cancel" },
+        ]
+      );
+    }
+  };
 
   // Function to request gallery permissions
   const requestGalleryPermission = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
+    if (status !== "granted") {
       Alert.alert(
-        'Permission Denied',
+        "Permission Denied",
         "You've refused to allow this app to access your photos! Please go to settings and enable the permission.",
-        [{ text: 'OK', onPress: () => Linking.openSettings() }]
+        [{ text: "OK", onPress: () => Linking.openSettings() }]
       );
       return false;
     }
@@ -87,11 +98,11 @@ const checkPermissions = async () => {
   // Function to request camera permissions
   const requestCameraPermission = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== 'granted') {
+    if (status !== "granted") {
       Alert.alert(
-        'Permission Denied',
+        "Permission Denied",
         "You've refused to allow this app to access your camera! Please go to settings and enable the permission.",
-        [{ text: 'OK', onPress: () => Linking.openSettings() }]
+        [{ text: "OK", onPress: () => Linking.openSettings() }]
       );
       return false;
     }
@@ -111,7 +122,15 @@ const checkPermissions = async () => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const selectedImage = result.assets[0]?.uri;
+      if (!selectedImage) {
+        console.error("No image URI found in the result object.");
+        return;
+      }
+      console.log("Selected image from gallery:", selectedImage);
+      setImage(selectedImage);
+      // Save image to Firestore
+      saveImageToFirestore(selectedImage);
       hideModal();
     }
   };
@@ -128,8 +147,29 @@ const checkPermissions = async () => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri); 
+      const selectedImage = result.assets[0]?.uri;
+      if (!selectedImage) {
+        console.error("No image URI found in the result object.");
+        return;
+      }
+      console.log("Selected image from camera:", selectedImage);
+      setImage(selectedImage);
+      // Save image to Firestore
+      saveImageToFirestore(selectedImage);
       hideModal();
+    }
+  };
+
+  // Save image to Firestore
+  const saveImageToFirestore = async (imageUri) => {
+    try {
+      console.log("Saving image to Firestore:", { userId, imageUri });
+      const userDocRef = doc(firestore, "users", userId);
+      await updateDoc(userDocRef, { profileImage: imageUri });
+      console.log("Profile image saved to Firestore:", imageUri);
+    } catch (error) {
+      console.error("Error saving image to Firestore:", error);
+      Alert.alert("Error", "Failed to save profile image");
     }
   };
 
