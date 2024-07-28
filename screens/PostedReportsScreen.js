@@ -16,6 +16,8 @@ import { ReportsContext } from "../components/ReportsContext";
 import { useRoute } from "@react-navigation/native"; 
 import * as ImagePicker from "expo-image-picker"; 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { firestore } from "../firebase/firebaseConfig";
 
 const PostedReportsScreen = ({ navigation }) => {
   // Destructure navigation from props
