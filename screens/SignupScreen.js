@@ -51,13 +51,14 @@ const SignupScreen = () => {
       // Save user data to Firestore
       await setDoc(doc(firestore, "users", user.uid), {
         firstName: firstName,
-
         email: email,
         uid: user.uid,
+        // initialize a profile image for the user with an empty string
+        profileImage: "",
       });
 
       // Show an alert to the user to check their email for verification
-      alert("Check your email for verification");
+      alert("Your account has been created. Please login to continue");
       // Clear the input fields
       setFirstName("");
       setPhone("");
