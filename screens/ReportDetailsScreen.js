@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import * as Animatable from 'react-native-animatable';
 
 const ReportDetailsScreen = ({ navigation }) => {
     const [title, setTitle] = useState('');
@@ -25,7 +26,6 @@ const ReportDetailsScreen = ({ navigation }) => {
     
         loadReports();
     }, []);
-    
 
     const saveReport = async () => {
         if (!title || !description || !location) {
@@ -74,19 +74,24 @@ const ReportDetailsScreen = ({ navigation }) => {
             <SwipeListView
                 data={reports}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <View style={styles.reportItem}>
+                renderItem={({ item, index }) => (
+                    <Animatable.View
+                        animation="slideInLeft"
+                        delay={index * 300}
+                        useNativeDriver
+                        style={styles.reportItem}
+                    >
                         <Text style={styles.reportTitle}>{item.title}</Text>
                         <Text>{item.description}</Text>
                         <Text>{item.location}</Text>
-                    </View>
+                    </Animatable.View>
                 )}
                 renderHiddenItem={({ item }) => (
                     <View style={styles.hiddenContainer}>
                         <Button
                             title="Edit"
                             onPress={() => handleEdit(item.id)}
-                            color="white"
+                            color="blue"
                         />
                         <Button
                             title="Delete"
@@ -159,6 +164,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 });
-
 
 export default ReportDetailsScreen;
