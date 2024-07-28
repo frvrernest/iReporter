@@ -9,6 +9,7 @@ import {
   Alert,
   SafeAreaView,
   Modal,
+  Linking,
 } from "react-native"; 
 import { Avatar } from "react-native-elements"; 
 import { ReportsContext } from "../components/ReportsContext"; 
@@ -47,33 +48,58 @@ const PostedReportsScreen = ({ navigation }) => {
 
     fetchReports(); // Call fetchReports
   }, []);
+ // Check permissions on screen load
+ useEffect(() => {
+  checkPermissions();
+}, []);
+const checkPermissions = async () => {
+  const cameraPermission = await ImagePicker.getCameraPermissionsAsync();
+  const galleryPermission = await ImagePicker.getMediaLibraryPermissionsAsync();
 
+  if (cameraPermission.status !== 'granted' || galleryPermission.status !== 'granted') {
+    Alert.alert(
+      'Permissions Required',
+      'This app needs camera and photo library permissions to update your profile picture.',
+      [
+        { text: 'Open Settings', onPress: () => Linking.openSettings() },
+        { text: 'Cancel', style: 'cancel' },
+      ]
+    );
+  }
+};
 
-  // function to request gallery permissions
+  // Function to request gallery permissions
   const requestGalleryPermission = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert('Permission Denied', "You've refused to allow this app to access your photos!");
+      Alert.alert(
+        'Permission Denied',
+        "You've refused to allow this app to access your photos! Please go to settings and enable the permission.",
+        [{ text: 'OK', onPress: () => Linking.openSettings() }]
+      );
       return false;
     }
     return true;
   };
 
-  // function to request camera permissions
+  // Function to request camera permissions
   const requestCameraPermission = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert('Permission Denied', "You've refused to allow this app to access your camera!");
+      Alert.alert(
+        'Permission Denied',
+        "You've refused to allow this app to access your camera! Please go to settings and enable the permission.",
+        [{ text: 'OK', onPress: () => Linking.openSettings() }]
+      );
       return false;
     }
     return true;
   };
+
   // Function to pick an image from the gallery
   const pickImage = async () => {
     const hasPermission = await requestGalleryPermission();
     if (!hasPermission) return;
-
-   
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -83,19 +109,15 @@ const PostedReportsScreen = ({ navigation }) => {
     });
 
     if (!result.canceled) {
-      setImage(result.uri);
+      setImage(result.assets[0].uri);
       hideModal();
     }
   };
 
   // Function to take a photo using the camera
   const takePhoto = async () => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("You've refused to allow this app to access your camera!");
-      return;
-    }
+    const hasPermission = await requestCameraPermission();
+    if (!hasPermission) return;
 
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -233,7 +255,7 @@ const PostedReportsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: "#000000", // Black background color
+    backgroundColor: "#ffffff", // Black background color
   },
   container: {
     flexGrow: 1,
