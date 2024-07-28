@@ -10,6 +10,7 @@ import PostedReportsScreen from "./screens/PostedReportsScreen";
 import HomeScreen from "./screens/HomeScreen";
 import Login from "./screens/LoginScreen";
 import SIGNUP from "./screens/SignupScreen";
+import EditRecordScreen from "./screens/EditRecordScreen";
 import ReportDetailsScreen from "./screens/ReportDetailsScreen";
 import MapScreen from "./screens/MapScreen"; 
 import SettingsScreen from "./screens/SettingsScreen"; 
@@ -41,6 +42,7 @@ function HomeStack() {
         options={{ title: "Create Report" }}
       />
       <Stack.Screen name="ReportDetails" component={ReportDetailsScreen} />
+      <Stack.Screen name="EditRecord" component={EditRecordScreen} />
     </Stack.Navigator>
   );
 }
