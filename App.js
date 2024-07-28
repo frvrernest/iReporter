@@ -12,6 +12,7 @@ import Login from "./screens/LoginScreen";
 import SIGNUP from "./screens/SignupScreen";
 import EditRecordScreen from "./screens/EditRecordScreen";
 import ReportDetailsScreen from "./screens/ReportDetailsScreen";
+import AdminDashboardScreen from "./screens/AdminDashboardScreen";
 import MapScreen from "./screens/MapScreen"; 
 import SettingsScreen from "./screens/SettingsScreen"; 
 import FloatingButton from "./components/FloatingButton"; 
@@ -43,7 +44,10 @@ function HomeStack() {
       />
       <Stack.Screen name="ReportDetails" component={ReportDetailsScreen} />
       <Stack.Screen name="EditRecord" component={EditRecordScreen} />
+      <Stack.Screen name="ReportDetails" component={ReportDetailsScreen} />
+      <Stack.Screen name="Admin" component={AdminDashboardScreen} />
     </Stack.Navigator>
+    
   );
 }
 
