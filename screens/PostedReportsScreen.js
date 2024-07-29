@@ -43,7 +43,7 @@ const PostedReportsScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await fetch("YOUR_API_ENDPOINT"); // Replace with your API endpoint
+        const response = await fetch("http://192.168.100.2:3000/reports"); // Replace with your API endpoint
         const data = await response.json();
         setServerReports(data);
       } catch (error) {
@@ -181,7 +181,7 @@ const PostedReportsScreen = ({ navigation }) => {
     );
   }
 
-  const combinedReports = [...reports, ...serverReports];
+  const combinedReports = reports.filter(report => report.userId === userId);
 
   const handleScroll = (event) => {
     const scrollX = event.nativeEvent.contentOffset.x;
@@ -259,14 +259,16 @@ const PostedReportsScreen = ({ navigation }) => {
         ) : (
           <Text style={styles.noReportsText}>No reports available</Text>
         )}
-        {/* <Text style={styles.reportsTitle}>Reports from others</Text> */}
+        <Text style={styles.reportsTitle}>Reports from others</Text>
         <FlatList
           data={serverReports}
           renderItem={({ item }) => (
-            <View style={styles.reportItem}>
-              <Text style={styles.reportTitle}>{item.issue}</Text>
+            <View style={styles.otherReportItem}>
+              <Text style={styles.reportTitle}>{item.title}</Text>
               <Text style={styles.reportLocation}>{item.location}</Text>
+              <Text style={styles.reportStatus}>{item.status}</Text>
               <Text style={styles.reportDate}>{item.date}</Text>
+              <View style={styles.reportSeparator}></View> 
             </View>
           )}
           keyExtractor={(item) => item.id.toString()}
@@ -349,22 +351,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   issueCard: {
-    backgroundColor: '#333',
+    backgroundColor: '#999', // Lighter background color for better visibility
     padding: 15,
     borderRadius: 10,
-    
     width: width * 0.8, 
     height: 150, 
     marginHorizontal: 10,
   },
   issueTitle: {
-    color: '#fff',
+    color: '#000', // Darker text color for contrast
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
   },
   issueNumber: {
-    color: '#bbb',
+    color: '#333', // Darker text color
     fontSize: 12,
     marginBottom: 15,
   },
@@ -373,16 +374,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   issueStatus: {
-    color: '#bbb',
+    color: '#000', // Darker text color
     fontSize: 12,
     textAlign: 'center',
   },
   issueStatusSelected: {
-    color: '#fff',
+    color: '#000', // Darker text color
     fontWeight: 'bold',
   },
   issueTime: {
-    color: '#bbb',
+    color: '#000', // Darker text color
     fontSize: 10,
     textAlign: 'center',
   },
@@ -393,28 +394,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   reportsTitle: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#ffffff',
-  },
-  reportItem: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    color:'#6E77F6',
   },
   reportTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#ffffff',
+    marginBottom: 5,
   },
   reportLocation: {
     fontSize: 14,
-    color: '#555',
+    color: '#ccc',
+    marginBottom: 5,
   },
   reportDate: {
     fontSize: 12,
-    color: '#999',
+    color: '#ccc',
+  },
+  reportStatus: {
+    fontSize: 12,
+    color: 'green',
   },
   addButton: {
     backgroundColor: '#ffffff',
@@ -455,11 +457,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    
   },
   loadingText: {
     fontSize: 18,
     color: '#ffffff',
+  },
+  otherReportItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    paddingBottom: 10,
+    marginBottom: 10,
   },
 });
 

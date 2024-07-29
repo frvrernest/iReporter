@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 import { colors } from "../utils/colors";
 import { useNavigation } from "@react-navigation/native";
 import { FONTS } from "../src/fonts/fonts";
-import { Icon } from 'react-native-elements';
 
 const { width, height } = Dimensions.get('window'); // Get device dimensions
 
@@ -12,8 +11,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   // Animation refs
-  const iconScale = useRef(new Animated.Value(1)).current;
-  const iconTranslateY = useRef(new Animated.Value(0)).current;
+  const logoScale = useRef(new Animated.Value(0)).current;
   const buttonScale = useRef(new Animated.Value(1)).current;
 
   // Function for when the user clicks on the login
@@ -26,42 +24,15 @@ const HomeScreen = () => {
     navigation.navigate("SIGNUP");
   };
 
-  // Animate icon on mount
+  // Animate logo on mount
   useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(iconScale, {
-          toValue: 1.2,
-          duration: 800,
-          useNativeDriver: true,
-          easing: Easing.inOut(Easing.ease),
-        }),
-        Animated.timing(iconScale, {
-          toValue: 1,
-          duration: 800,
-          useNativeDriver: true,
-          easing: Easing.inOut(Easing.ease),
-        }),
-      ]),
-    ).start();
-
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(iconTranslateY, {
-          toValue: -10,
-          duration: 800,
-          useNativeDriver: true,
-          easing: Easing.inOut(Easing.ease),
-        }),
-        Animated.timing(iconTranslateY, {
-          toValue: 0,
-          duration: 800,
-          useNativeDriver: true,
-          easing: Easing.inOut(Easing.ease),
-        }),
-      ]),
-    ).start();
-  }, [iconScale, iconTranslateY]);
+    Animated.timing(logoScale, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+      easing: Easing.out(Easing.exp),
+    }).start();
+  }, [logoScale]);
 
   // Animate button press
   const animateButtonPressIn = () => {
@@ -80,28 +51,10 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.iconContainer, { transform: [{ scale: iconScale }, { translateY: iconTranslateY }] }]}>
-        <Icon
-          name="person"
-          type="material"
-          size={width * 0.3} //  size
-          color="blue"
-        />
-        <Icon
-          name="report"
-          type="material"
-          size={width * 0.15} //  size
-          color="red"
-          containerStyle={styles.reportIcon}
-        />
-        <Icon
-          name="report"
-          type="material"
-          size={width * 0.15} //  size
-          color="red"
-          containerStyle={styles.warningIcon}
-        />
-      </Animated.View>
+      <Animated.Image 
+        source={require("../src/assets/LOGO.png")} 
+        style={[styles.logo, { transform: [{ scale: logoScale }] }]} 
+      />
       <Text style={styles.title}>Be the Change.</Text>
       <Text style={styles.title}>Report with iReporter.</Text>
       <Text style={styles.text}>
@@ -139,27 +92,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: width * 0.05, // Responsive padding
-    backgroundColor: '#000000',
+    backgroundColor: '#000000', 
   },
-  iconContainer: {
+  logo: {
+    width: width * 0.6, // Larger width
+    height: width * 0.5, // Larger height
     marginBottom: height * 0.05, // Responsive margin
-    alignItems: 'center',
-  },
-  reportIcon: {
-    position: 'absolute',
-    bottom: -30,
-    right: -30,
-  },
-  warningIcon: {
-    position: 'absolute',
-    bottom: -30,
-    left: -30,
+    borderRadius: 20, // Rounded corners
   },
   title: {
     fontSize: width * 0.08, // Responsive font size
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'blue',
+    color: colors.secondary,
     marginBottom: height * 0.02, // Responsive margin
     fontFamily: FONTS.SemiBold,
   },
@@ -168,7 +113,7 @@ const styles = StyleSheet.create({
     lineHeight: width * 0.06, // Responsive line height
     fontFamily: FONTS.Medium,
     textAlign: 'center',
-    color: 'white',
+    color: '#ffffff', // Changed text color to white for better contrast
     marginBottom: height * 0.05, // Responsive margin
     paddingHorizontal: width * 0.05, // Responsive padding
   },
@@ -184,8 +129,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     marginHorizontal: width * 0.02, // Responsive margin
-    elevation: 3,
-    shadowColor: '#000',
+    elevation: 3, 
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,

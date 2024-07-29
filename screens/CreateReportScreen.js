@@ -120,7 +120,7 @@ const CreateReportScreen = ({ navigation }) => {
           Report, view, or discuss local problems
         </Animatable.Text>
         <Animatable.Text animation="fadeInDown" delay={100} style={styles.subTitle}>
-          "Like graffiti, fly tipping, broken paving slabs, or street lighting."
+          Fill the form to make a report
         </Animatable.Text>
 
         {/* Form */}
