@@ -44,8 +44,6 @@ function HomeStack() {
       />
       <Stack.Screen name="ReportDetails" component={ReportDetailsScreen} />
       <Stack.Screen name="EditRecord" component={EditRecordScreen} />
-      <Stack.Screen name="Admin" component={AdminDashboard} />
-      
     </Stack.Navigator>
   );
 }
@@ -63,11 +61,7 @@ function MyReportsStack() {
         component={ReportDetailsScreen}
         options={{ title: "Report Details" }}
       />
-      <Stack.Screen
-        name="Admin"
-        component={AdminDashboard}
-        options={{ title: "AdminDashboard" }}
-      />
+      
 
     </Stack.Navigator>
   );
@@ -112,7 +106,7 @@ function App() {
             <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name="My Reports" component={MyReportsStack} />
             <Tab.Screen name="Map" component={MapScreen} />
-            <Tab.Screen name="Settings" component={SettingsScreen} />
+            <Tab.Screen name="Settings" component={AdminDashboard} />
           </Tab.Navigator>
           <FloatingButton />
         </View>
