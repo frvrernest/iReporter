@@ -22,7 +22,7 @@ const DashboardScreen = () => {
 
     const fetchReports = async () => {
         try{
-            const response = await fetch('http://192.168.100.84:3000/reports');
+            const response = await fetch('http://192.168.100.2:3000/reports');
             console.log('Fetching reports..');
             if (!response.ok) {
                 console.log('Network response was not ok');

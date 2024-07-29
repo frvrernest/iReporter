@@ -259,7 +259,7 @@ const PostedReportsScreen = ({ navigation }) => {
         ) : (
           <Text style={styles.noReportsText}>No reports available</Text>
         )}
-        <Text style={styles.reportsTitle}>Reports from others</Text>
+        {/* <Text style={styles.reportsTitle}>Reports from others</Text> */}
         <FlatList
           data={serverReports}
           renderItem={({ item }) => (
