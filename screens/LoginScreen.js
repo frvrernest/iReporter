@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#fff',
     marginBottom: 10,
-    marginTop: -80,
+    marginTop: -60,
     fontFamily: FONTS.SemiBold,
   },
   headingText2: {
