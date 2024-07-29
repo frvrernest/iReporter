@@ -84,20 +84,20 @@ const HomeScreen = () => {
         <Icon
           name="person"
           type="material"
-          size={width * 0.6} // Larger size
+          size={width * 0.3} //  size
           color="blue"
         />
         <Icon
           name="report"
           type="material"
-          size={width * 0.3} //  size
+          size={width * 0.15} //  size
           color="red"
           containerStyle={styles.reportIcon}
         />
         <Icon
           name="report"
           type="material"
-          size={width * 0.3} //  icon
+          size={width * 0.15} //  size
           color="red"
           containerStyle={styles.warningIcon}
         />
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: width * 0.05, // Responsive padding
-    backgroundColor: '#000000', 
+    backgroundColor: '#000000',
   },
   iconContainer: {
     marginBottom: height * 0.05, // Responsive margin
@@ -156,8 +156,7 @@ const styles = StyleSheet.create({
     left: -30,
   },
   title: {
-    fontSize:44,
-    // fontSize: width * 0.08, // Responsive font size
+    fontSize: width * 0.08, // Responsive font size
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'blue',
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
     lineHeight: width * 0.06, // Responsive line height
     fontFamily: FONTS.Medium,
     textAlign: 'center',
-    color: 'white', 
+    color: 'white',
     marginBottom: height * 0.05, // Responsive margin
     paddingHorizontal: width * 0.05, // Responsive padding
   },
@@ -185,8 +184,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     marginHorizontal: width * 0.02, // Responsive margin
-    elevation: 3, 
-    shadowColor: '#000', 
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
