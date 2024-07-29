@@ -84,7 +84,7 @@ function App() {
                   iconName = 'file-text';
                 } else if (route.name === 'Map') {
                   iconName = 'map';
-                } else if (route.name === 'Settings') {
+                } else if (route.name === 'Dashboard') {
                   iconName = 'settings';
                 } else if (route.name === 'CreateReport') {
                   iconName = 'camera';
@@ -108,7 +108,7 @@ function App() {
             <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name="My Reports" component={MyReportsStack} />
             <Tab.Screen name="Map" component={MapScreen} />
-            <Tab.Screen name="Settings" component={AdminDashboard} />
+            <Tab.Screen name="Dashboard" component={AdminDashboard} />
           </Tab.Navigator>
           <FloatingButton />
         </View>
