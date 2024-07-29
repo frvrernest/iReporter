@@ -29,8 +29,10 @@ function HomeStack() {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="SIGNUP" component={SIGNUP} />
+      <Stack.Screen name="Login" component={Login} 
+      options={{ headerShown: false}}/>
+      <Stack.Screen name="SIGNUP" component={SIGNUP}
+       options={{ headerShown: false}} />
       <Stack.Screen
         name="PostedReports"
         component={PostedReportsScreen}
